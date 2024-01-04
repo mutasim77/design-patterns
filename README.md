@@ -50,10 +50,10 @@ Feel free to dive into the content that interests you the most!
 Design patterns are reusable solutions to common problems that occur in software design. They can be classified into three main categories: Creational, Structural, and Behavioral design patterns. Each of these categories serves a distinct purpose and helps in solving different types of problems in software design.
 1. [Creational Design Patterns 🏗](#creational-design-patterns-)
    - [Singleton 💍](#singleton-)
-   - [Abstract Factory 🔨](#abstract-factory-)
+   - [Prototype 🧬](#prototype-)
    - [Builder 👷](#builder-)
    - [Factory Method 🏭](#factory-method-)
-   - [Prototype 🧬](#prototype-)
+   - [Abstract Factory 🔨](#abstract-factory-)
 3. [Structural Design Patterns 🛠️](#structural-design-patterns-)
 4. [Behavioral Design Patterns 🔄](#behavioral-design-patterns-)
 
@@ -81,7 +81,7 @@ Implementing the Singleton pattern in object-oriented programming typically invo
 4. Within the static method of the class, verify the existence of the singleton instance. If it exists, return it; otherwise, create a new instance and return it.
 
 ### Classic Implementation:
-Here is how we might create a database connection using the Singleton pattern.
+Here is how we might create a database connection using the Singleton pattern:
 ```ts
 class Database {
   // Step 1: Declare a private static instance
@@ -141,4 +141,63 @@ Implementing Singleton in a multithreaded environment requires careful synchroni
 Unit testing client code using Singleton can be complex due to private constructors and challenges in mocking the singleton instance.
 
 
-## Abstract Factory 🔨
+## Prototype 🧬
+Prototype is a creational design pattern that lets you copy existing objects without making your code dependent on their classes. It allows you to create a copy of an existing object and modify it to your needs, instead of going through the trouble of creating an object from scratch and setting it up.
+
+In simple words:
+> Create a new object based on an existing object through **cloning**.
+
+![Prototype Design Pattern](./images/prototype-design-pattern.png)
+
+### Implementation: 
+Let's see a simple implementation of the Prototype pattern in TS through an example in game development.
+```ts
+interface Prototype {
+    clone(): Prototype;
+    details: EnemyDetails;
+}
+
+interface EnemyDetails {
+    type: string;
+    strength: number;
+}
+
+/**
+ * Concrete Prototype representing an Enemy in a Game
+ */
+class Enemy implements Prototype {
+    constructor(public details: EnemyDetails) {}
+
+    public clone(): Enemy {
+        const clone = new Enemy({ ...this.details });
+        return clone;
+    }
+}
+
+// Usage
+const originalEnemy: Prototype = new Enemy({ type: "Dragon", strength: 10 });
+const clonedEnemy: Prototype = originalEnemy.clone();
+
+console.log(originalEnemy.details); // { type: 'Dragon', strength: 10 }
+console.log(clonedEnemy.details); // { type: 'Dragon', strength: 10 }
+
+clonedEnemy.details = { type: 'Goblin', strength: 8 };
+console.log(clonedEnemy.details); // { type: 'Goblin', strength: 8 }
+```
+This approach enhances code efficiency and maintainability, allowing easy modification of specific properties without creating new instances for each enemy.
+
+### When to Use the Prototype Pattern ? ✅
+The Prototype pattern is handy when copying existing objects is more efficient than creating new ones. It's beneficial for systems seeking independence in creating, composing, and representing products.
+- Clone prototypes to avoid redoing intricate constructions for similar objects.
+- Clone pre-loaded objects to enhance efficiency when creating from scratch is resource-intensive.
+- Use the Prototype pattern when needing multiple similar but not identical objects.
+- Facilitates storing and cloning prototypes for restoring previous states, ideal for undo features.
+
+### Advantages of the Prototype Pattern 🪄 : 
+- Avoiding Object Reference Errors 🚫
+- Efficient Object Cloning 🚀
+- Simplifying Object Creation 🌐
+
+### Disadvantages of the Prototype Pattern 🆘 : 
+- Shallow vs. Deep Copying 🔄 : Cloning complex objects that have circular references might be very tricky
+- Complex Cloning Hierarchies 📜: Cloning hierarchical structures introduces complexities, particularly with interconnected objects and relationships.
