@@ -139,3 +139,6 @@ Implementing Singleton in a multithreaded environment requires careful synchroni
 
 - **Unit Testing Complexity 🧪:**
 Unit testing client code using Singleton can be complex due to private constructors and challenges in mocking the singleton instance.
+
+
+## Abstract Factory 🔨
