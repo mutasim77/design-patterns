@@ -70,7 +70,7 @@ Creational design patterns 🎨 revolve around the intricacies of object creatio
 In simple words: 
 > "Singleton - ensures that only one object of a particular class is ever created."
 
-![Singleton Design Pattern](./images/singleton-design-patter.png)
+![Singleton Design Pattern](./images/singleton-design-pattern.png)
 
 ### Steps of Implementation
 Implementing the Singleton pattern in object-oriented programming typically involves the following steps:
