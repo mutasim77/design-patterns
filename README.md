@@ -65,3 +65,77 @@ Creational design patterns 🎨 revolve around the intricacies of object creatio
 <hr/>
 
 ## Singleton 💍
+> The Singleton pattern is a creational design pattern ensuring that a class has only one instance while providing global access to this instance.
+
+In simple words: 
+> "Singleton - ensures that only one object of a particular class is ever created."
+
+![Singleton Design Pattern](./images/singleton-design-patter.png)
+
+### Steps of Implementation
+Implementing the Singleton pattern in object-oriented programming typically involves the following steps:
+
+1. Declare a private ```static``` attribute in the singleton class.
+2. Create a public static method (commonly named ```getInstance()```) to serve as a global access point for the singleton object. This method embraces "lazy initialization," meaning it generates a new instance only when necessary.
+3. Set the constructor of the singleton class as ```private```, preventing external objects from using the ```new``` operator with the singleton class.
+4. Within the static method of the class, verify the existence of the singleton instance. If it exists, return it; otherwise, create a new instance and return it.
+
+### Classic Implementation:
+Here is how we might create a database connection using the Singleton pattern.
+```ts
+class Database {
+  // Step 1: Declare a private static instance
+  private static instance: Database;
+
+  // Step 3: Make the constructor private
+  private constructor() {}
+
+  // Step 2: Create a public static getInstance method
+  public static getInstance(): Database {
+    if (!Database.instance) {
+      Database.instance = new Database();
+    }
+    return Database.instance;
+  }
+
+  public query(query: string): void {
+    console.log(`Executing query '${query}' on database.`);
+  }
+}
+
+// Usage
+const db1 = Database.getInstance();
+const db2 = Database.getInstance();
+
+db1.query("SELECT * FROM users"); // Executing query `SELECT * FROM users` on database.
+db2.query("DROP DATABASE users"); // Executing query `DROP DATABASE users` on database.
+
+console.log(db1 === db2); // true
+```
+
+In this example, the ```Database``` class represents a database connection. The getInstance method ensures that there is only one instance of the Database class, and the query method allows you to perform queries on the database. 
+The usage demonstrates that ```db1``` and ```db2``` are the same instance, showcasing the Singleton pattern behavior. 
+
+### When To Use Singleton Pattern ? ✅
+Consider using Singleton when:
+- You have global variables that should be accessible universally.
+- There is repeated, expensive initialization of the same resource.
+- Multiple parts of your system access and potentially modify a shared resource.
+- An entity is accessed inconsistently across the system.
+- Duplicate instances are generated, and identical instances are unnecessary.
+- Excessive parameters are passed through layers for an object.
+
+### Disadvantages of Singleton Pattern 🆘 :
+Despite its advantages, the Singleton pattern has drawbacks:
+
+- **Violates Single Responsibility Principle 🚫:**
+Simultaneously managing object instantiation and global access might breach the Single Responsibility Principle.
+
+- **Masking Design Issues 🎭:**
+Singleton can hide underlying design problems, offering a quick fix without addressing the root causes.
+
+- **Multithreading Challenges  🔄:**
+Implementing Singleton in a multithreaded environment requires careful synchronization to prevent unintended multiple instantiations.
+
+- **Unit Testing Complexity 🧪:**
+Unit testing client code using Singleton can be complex due to private constructors and challenges in mocking the singleton instance.
