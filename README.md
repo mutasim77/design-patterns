@@ -38,3 +38,18 @@ It's super important to use design patterns wisely. Imagine you have a cool tool
 4. **Be Ready to Change:** As projects grow, what worked before might not be the best choice anymore. We need to be flexible and adjust.
 
 > Using design patterns is like having a toolbox full of helpful tools. Just remember, not every tool is right for every job. We should pick the ones that fit the situation best. If we do that, our programs will be strong and reliable!
+
+## Getting Started 👻
+To get started, follow the navigation below to explore different sections of this repository:
+- [Design Patterns](#design-patterns-): Reusable solutions to common problems in software design.
+- [SOLID Principles](#solid-principles-): Guiding principles for creating well-structured and maintainable code.
+
+Feel free to dive into the content that interests you the most!
+
+# Design Patterns 🔮
+Design patterns are reusable solutions to common problems that occur in software design. They can be classified into three main categories: Creational, Structural, and Behavioral design patterns. Each of these categories serves a distinct purpose and helps in solving different types of problems in software design.
+1. [Creational Design Patterns](#creational-design-patterns-)
+2. [Structural Design Patterns](#structural-design-patterns-)
+3. [Behavioral Design Patterns](#behavioral-design-patterns-)
+
+# Creational Design Patterns 🏗️
