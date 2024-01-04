@@ -52,4 +52,4 @@ Design patterns are reusable solutions to common problems that occur in software
 2. [Structural Design Patterns](#structural-design-patterns-)
 3. [Behavioral Design Patterns](#behavioral-design-patterns-)
 
-# Creational Design Patterns 🏗️
+# Creational Design Patterns 🏗
