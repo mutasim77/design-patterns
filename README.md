@@ -48,8 +48,14 @@ Feel free to dive into the content that interests you the most!
 
 # Design Patterns 🔮
 Design patterns are reusable solutions to common problems that occur in software design. They can be classified into three main categories: Creational, Structural, and Behavioral design patterns. Each of these categories serves a distinct purpose and helps in solving different types of problems in software design.
-- [Design Patterns 🔮](#design-patterns-)
-- [Creational Design Patterns 🏗](#creational-design-patterns-)
+1. [Creational Design Patterns 🏗](#creational-design-patterns-)
+   - [Singleton 💍](#singleton-)
+   - [Abstract Factory 🔨](#abstract-factory-)
+   - [Builder 👷](#builder-)
+   - [Factory Method 🏭](#factory-method-)
+   - [Prototype 🧬](#prototype-)
+3. [Structural Design Patterns 🛠️](#structural-design-patterns-)
+4. [Behavioral Design Patterns 🔄](#behavioral-design-patterns-)
 
 # Creational Design Patterns 🏗
 Creational design patterns 🎨 revolve around the intricacies of object creation. They introduce a level of abstraction to the instantiation process, ensuring the system remains agnostic to the specifics of how its objects come into existence, are composed, and represented. These design patterns offer a mechanism for object creation that conceals the intricacies of the creation logic, steering away from direct object instantiation using the new operator. By doing so, they grant greater flexibility in determining the objects necessary for a given use case. Notable examples of creational design patterns encompass Singleton, Factory Method, Abstract Factory, Builder, and Prototype. 🚀
