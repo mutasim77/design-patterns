@@ -201,3 +201,5 @@ The Prototype pattern is handy when copying existing objects is more efficient t
 ### Disadvantages of the Prototype Pattern 🆘 : 
 - Shallow vs. Deep Copying 🔄 : Cloning complex objects that have circular references might be very tricky
 - Complex Cloning Hierarchies 📜: Cloning hierarchical structures introduces complexities, particularly with interconnected objects and relationships.
+
+## Builder 👷
