@@ -386,106 +386,53 @@ In Simple Terms:
 ### Classical Implementation:
 ```ts
 interface Button {
-  render(): void;
-
-  onClick(f: Function): void;
-}
-
-interface Checkbox {
-  render(): void;
-
-  toggle(): void;
+    render(): void;
+    onClick(f: Function): void;
 }
 
 interface GUIFactory {
-  createButton(): Button;
-
-  createCheckbox(button: Button): Checkbox;
+    createButton(): Button;
 }
 
 class WindowsButton implements Button {
-  render() {
-    console.log("Render a button in Windows style");
-  }
+    render() {
+        console.log("Render a button in Windows style");
+    }
 
-  onClick(f: Function) {
-    console.log("Bind a Windows style button click event");
-    f();
-  }
-}
-
-class WindowsCheckbox implements Checkbox {
-  private button: Button;
-
-  constructor(button: Button) {
-    this.button = button;
-  }
-
-  render() {
-    console.log("Render a checkbox in Windows style");
-  }
-
-  toggle() {
-    this.button.onClick(() => console.log("Checkbox state toggled!"));
-  }
+    onClick(f: Function) {
+        console.log("Bind a Windows style button click event");
+        f();
+    }
 }
 
 class MacOSButton implements Button {
-  render() {
-    console.log("Render a button in MacOS style");
-  }
+    render() {
+        console.log("Render a button in MacOS style");
+    }
 
-  onClick(f: Function) {
-    console.log("Bind a MacOS style button click event");
-    f();
-  }
-}
-
-class MacOSCheckbox implements Checkbox {
-  private button: Button;
-
-  constructor(button: Button) {
-    this.button = button;
-  }
-
-  render() {
-    console.log("Render a checkbox in MacOS style");
-  }
-
-  toggle() {
-    this.button.onClick(() => console.log("Checkbox state toggled!"));
-  }
+    onClick(f: Function) {
+        console.log("Bind a MacOS style button click event");
+        f();
+    }
 }
 
 class WindowsFactory implements GUIFactory {
-  createButton(): Button {
-    return new WindowsButton();
-  }
-
-  createCheckbox(button: Button): Checkbox {
-    return new WindowsCheckbox(button);
-  }
+    createButton(): Button {
+        return new WindowsButton();
+    }
 }
 
 class MacOSFactory implements GUIFactory {
-  createButton(): Button {
-    return new MacOSButton();
-  }
-
-  createCheckbox(button: Button): Checkbox {
-    return new MacOSCheckbox(button);
-  }
+    createButton(): Button {
+        return new MacOSButton();
+    }
 }
 
 function renderUI(factory: GUIFactory) {
-  const button = factory.createButton();
-  const checkbox = factory.createCheckbox(button);
+    const button = factory.createButton();
 
-  button.render();
-  checkbox.render();
-
-  button.onClick(() => console.log("Button clicked!"));
-  checkbox.toggle();
+    button.render();
+    button.onClick(() => console.log("Button clicked!"));
 }
 
 console.log("App: Launched with the Windows factory.");
@@ -509,3 +456,11 @@ renderUI(new MacOSFactory());
 - **Complexity 📈:** Introduces complexity and abstraction into the code, which may be unnecessary for simpler applications.
 - **Tight Coupling And Dependency 🔗:** Client code becomes dependent on the Abstract Factory interface, requiring changes if the interface changes.
 - **Limited Flexibility In Modifying Product Families 🚫:** Adding new types of products may require changing the core factory interface, violating the Open/Closed Principle.
+
+
+# Structural Design Patterns 🛠️
+
+
+![Structural Design Patterns](./images/structural-design-patterns.png)
+<br/>
+<hr/>
