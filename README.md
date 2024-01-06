@@ -203,3 +203,72 @@ The Prototype pattern is handy when copying existing objects is more efficient t
 - Complex Cloning Hierarchies 📜: Cloning hierarchical structures introduces complexities, particularly with interconnected objects and relationships.
 
 ## Builder 👷
+Builder is a creational design pattern facilitating the step-by-step construction of complex objects. It enables the creation of various object types using a unified construction process, preventing constructor overload. _Use the Builder pattern to get rid of a “telescoping constructor”._
+
+In simple words:
+> Builder helps in creating different versions of an object without cluttering the constructor.
+
+![Builder Design Pattern](./images/builder-design-pattern.png)
+
+### Implementation Example in TypeScript:
+```ts
+interface IPizza {
+  name: string;
+  size: string;
+  isCheese: boolean;
+}
+
+interface IPizzaBuilder {
+  setName(name: string): IPizzaBuilder;
+  setSize(size: string): IPizzaBuilder;
+  setCheese(isCheese: boolean): IPizzaBuilder;
+  build(): IPizza;
+}
+
+class Pizza implements IPizza {
+  constructor(
+    public name: string,
+    public size: string,
+    public isCheese: boolean
+  ) {}
+}
+
+class PizzaBuilder implements IPizzaBuilder {
+  private name: string = "";
+  private size: string = "";
+  private isCheese: boolean = false;
+
+  setName(name: string): IPizzaBuilder {
+    this.name = name;
+    return this;
+  }
+
+  setSize(size: string): IPizzaBuilder {
+    this.size = size;
+    return this;
+  }
+
+  setCheese(isCheese: boolean): IPizzaBuilder {
+    this.isCheese = isCheese;
+    return this;
+  }
+
+  build(): IPizza {
+    return new Pizza(this.name, this.size, this.isCheese);
+  }
+}
+
+class PizzaDirector {
+  constructor(private builder: IPizzaBuilder) {}
+
+  buildCustom(name: string, size: string): IPizza {
+    return this.builder.setName(name).setSize(size).build();
+  }
+}
+
+// Usage:
+const customPizza: IPizza = new PizzaDirector(new PizzaBuilder()).buildCustom("Custom Pizza", "Medium");
+
+console.log(customPizza);
+```
+This TypeScript code implements a simplified Builder pattern for creating pizza objects, allowing customization of attributes like name, size, and the presence of cheese.
