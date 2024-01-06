@@ -213,62 +213,98 @@ In simple words:
 ### Implementation Example in TypeScript:
 ```ts
 interface IPizza {
-  name: string;
-  size: string;
-  isCheese: boolean;
+    name: string;
+    size: string;
+    isCheese: boolean;
 }
 
 interface IPizzaBuilder {
-  setName(name: string): IPizzaBuilder;
-  setSize(size: string): IPizzaBuilder;
-  setCheese(isCheese: boolean): IPizzaBuilder;
-  build(): IPizza;
+    setName(name: string): IPizzaBuilder;
+    setSize(size: string): IPizzaBuilder;
+    setCheese(isCheese: boolean): IPizzaBuilder;
+    build(): IPizza;
 }
 
 class Pizza implements IPizza {
-  constructor(
-    public name: string,
-    public size: string,
-    public isCheese: boolean
-  ) {}
+    constructor(
+        public name: string,
+        public size: string,
+        public isCheese: boolean
+    ) { }
 }
 
 class PizzaBuilder implements IPizzaBuilder {
-  private name: string = "";
-  private size: string = "";
-  private isCheese: boolean = false;
+    private name: string = "";
+    private size: string = "";
+    private isCheese: boolean = false;
 
-  setName(name: string): IPizzaBuilder {
-    this.name = name;
-    return this;
-  }
+    setName(name: string): IPizzaBuilder {
+        this.name = name;
+        return this;
+    }
 
-  setSize(size: string): IPizzaBuilder {
-    this.size = size;
-    return this;
-  }
+    setSize(size: string): IPizzaBuilder {
+        this.size = size;
+        return this;
+    }
 
-  setCheese(isCheese: boolean): IPizzaBuilder {
-    this.isCheese = isCheese;
-    return this;
-  }
+    setCheese(isCheese: boolean): IPizzaBuilder {
+        this.isCheese = isCheese;
+        return this;
+    }
 
-  build(): IPizza {
-    return new Pizza(this.name, this.size, this.isCheese);
-  }
+    build(): IPizza {
+        return new Pizza(this.name, this.size, this.isCheese);
+    }
 }
 
 class PizzaDirector {
-  constructor(private builder: IPizzaBuilder) {}
+    constructor(private builder: IPizzaBuilder) { }
 
-  buildCustom(name: string, size: string): IPizza {
-    return this.builder.setName(name).setSize(size).build();
-  }
+    public buildMinimalPizza(name: string, size: string): IPizza {
+        return this.builder
+            .setName(name)
+            .setSize(size)
+            .build();
+    }
+
+    public buildFullFeaturedPizza(name: string, size: string, isCheese: boolean): IPizza {
+        return this.builder
+            .setName(name)
+            .setSize(size)
+            .setCheese(isCheese)
+            .build();
+    }
 }
 
 // Usage:
-const customPizza: IPizza = new PizzaDirector(new PizzaBuilder()).buildCustom("Custom Pizza", "Medium");
+const builder: IPizzaBuilder = new PizzaBuilder();
+const director: PizzaDirector = new PizzaDirector(builder);
+const pizzaWithoutCheese: IPizza = director.buildMinimalPizza('Pepperoni', 'Medium');
+const pizzaWithCheese: IPizza = director.buildFullFeaturedPizza('Hawaiian', 'Small', true);
 
-console.log(customPizza);
+console.log(pizzaWithoutCheese); // Pizza: {"name": "Pepperoni","size": "Medium","isCheese": false} 
+console.log(pizzaWithCheese); // Pizza: {"name": "Pepperoni","size": "Medium","isCheese": true} 
 ```
 This TypeScript code implements a simplified Builder pattern for creating pizza objects, allowing customization of attributes like name, size, and the presence of cheese.
+
+### When to Use Builder Pattern ? ✅
+- **Complex Object Creation 🧩:** Simplify the creation of objects with numerous optional and mandatory attributes.
+- **Step-by-step Object Creation 🔨:** Useful when an object needs to be built in multiple ordered steps.
+- **Immutable Objects 🔄:** Construct immutable objects with many attributes, enhancing object integrity.
+- **Code Clarity 📝:** Enhance code readability, especially when dealing with constructors with numerous parameters.
+
+### Advantages of Builder Pattern 🪄 :
+- **Fluent Interface 🌐:** Enhances code readability for step-by-step object construction.
+- **Separation of Construction Logic and Business Logic 🧠:** Keeps client code focused on business logic by isolating object construction details.
+- **Different Representations 🎨:** Utilizes diverse builders for various object representations without modifying client code.
+- **Increased Object Integrity 🔒:** Ensures object validity at each step, elevating data integrity.
+- **Immutability 🔄:** Returns immutable objects for simplicity, safety, and cleaner code.
+
+### Disadvantages of Builder Pattern 🆘 :
+- **Increased Complexity 📈📉:** Introduces abstraction layers, potentially complicating code for those unfamiliar with the pattern.
+- **Additional Code 📄:** May result in more code, especially for smaller classes, potentially increasing codebase size.
+- **Runtime Errors 🚫:** Lack of compile-time checks may lead to runtime errors if required fields are not set.
+- **Refactoring Difficulties 🛠️:** Alters to the class structure might necessitate updates to the builder code, making refactoring more challenging and time-consuming.
+
+## Factory Method 🏭
