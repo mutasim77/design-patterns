@@ -316,7 +316,7 @@ In Simple Terms:
 ![Factory Method Pattern](./images/factory-method-pattern.png)
 
 ### Implementation:
-Consider a car manufacturing program with different car types (Sedan, SUV, Hatchback): 
+Consider a car manufacturing program with different car types (Sedan, Hatchback): 
 ```ts
 abstract class Car {
   constructor(public model: string, public productionYear: number) {}
@@ -373,3 +373,139 @@ hatchback.displayCarInfo(); // // This is a Sedan. Model: Corolla, Production Ye
 - **Refactoring 🔄:** Introducing the Factory Pattern to an existing codebase might pose challenges during refactoring.
 - **Increased Number of Classes 📈:** The pattern can lead to a higher number of classes, potentially making the codebase more complex.
 - **Testing 🧪:** While aiding in writing testable code, complex factories can complicate the testing process, requiring additional setup.
+
+
+## Abstract Factory 🔨
+The Abstract Factory pattern is a creational design pattern that furnishes an interface for constructing families of objects that are related or dependent, all without explicitly specifying their concrete classes.
+
+In Simple Terms:
+> A factory of factories.
+
+![Abstract Factory Pattern](./images/abstract-factory-pattern.png)
+
+### Classical Implementation:
+```ts
+interface Button {
+  render(): void;
+
+  onClick(f: Function): void;
+}
+
+interface Checkbox {
+  render(): void;
+
+  toggle(): void;
+}
+
+interface GUIFactory {
+  createButton(): Button;
+
+  createCheckbox(button: Button): Checkbox;
+}
+
+class WindowsButton implements Button {
+  render() {
+    console.log("Render a button in Windows style");
+  }
+
+  onClick(f: Function) {
+    console.log("Bind a Windows style button click event");
+    f();
+  }
+}
+
+class WindowsCheckbox implements Checkbox {
+  private button: Button;
+
+  constructor(button: Button) {
+    this.button = button;
+  }
+
+  render() {
+    console.log("Render a checkbox in Windows style");
+  }
+
+  toggle() {
+    this.button.onClick(() => console.log("Checkbox state toggled!"));
+  }
+}
+
+class MacOSButton implements Button {
+  render() {
+    console.log("Render a button in MacOS style");
+  }
+
+  onClick(f: Function) {
+    console.log("Bind a MacOS style button click event");
+    f();
+  }
+}
+
+class MacOSCheckbox implements Checkbox {
+  private button: Button;
+
+  constructor(button: Button) {
+    this.button = button;
+  }
+
+  render() {
+    console.log("Render a checkbox in MacOS style");
+  }
+
+  toggle() {
+    this.button.onClick(() => console.log("Checkbox state toggled!"));
+  }
+}
+
+class WindowsFactory implements GUIFactory {
+  createButton(): Button {
+    return new WindowsButton();
+  }
+
+  createCheckbox(button: Button): Checkbox {
+    return new WindowsCheckbox(button);
+  }
+}
+
+class MacOSFactory implements GUIFactory {
+  createButton(): Button {
+    return new MacOSButton();
+  }
+
+  createCheckbox(button: Button): Checkbox {
+    return new MacOSCheckbox(button);
+  }
+}
+
+function renderUI(factory: GUIFactory) {
+  const button = factory.createButton();
+  const checkbox = factory.createCheckbox(button);
+
+  button.render();
+  checkbox.render();
+
+  button.onClick(() => console.log("Button clicked!"));
+  checkbox.toggle();
+}
+
+console.log("App: Launched with the Windows factory.");
+renderUI(new WindowsFactory());
+
+console.log("App: Launched with the MacOS factory.");
+renderUI(new MacOSFactory());
+```
+
+### When To Use Abstract Factory Pattern ? ✅
+- **Interrelated Dependencies:** Ensure that a client uses objects that belong together in a family.
+- **Switching Product Families:** Easily swap entire families of objects (e.g., different look-and-feel standards).
+- **Supporting Multiple Architectures:** Run software in different environments requiring different implementations of related objects.
+
+### Advantages of Abstract Factory Pattern 🪄 :
+- **Consistency among products 🤝:** Ensure compatibility and belongingness within a family of products.
+- **Code Reusability 🔄:** Promote reuse of code for creating related product families.
+- **Single Responsibility Principle 🎯:** Each concrete factory has a single responsibility, leading to cleaner and more understandable code.
+
+### Disadvantages of Abstract Factory Pattern 🆘 :
+- **Complexity 📈:** Introduces complexity and abstraction into the code, which may be unnecessary for simpler applications.
+- **Tight Coupling And Dependency 🔗:** Client code becomes dependent on the Abstract Factory interface, requiring changes if the interface changes.
+- **Limited Flexibility In Modifying Product Families 🚫:** Adding new types of products may require changing the core factory interface, violating the Open/Closed Principle.
