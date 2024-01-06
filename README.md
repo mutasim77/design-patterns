@@ -308,3 +308,68 @@ This TypeScript code implements a simplified Builder pattern for creating pizza 
 - **Refactoring Difficulties 🛠️:** Alters to the class structure might necessitate updates to the builder code, making refactoring more challenging and time-consuming.
 
 ## Factory Method 🏭
+The Factory Method Pattern is a creational design pattern that provides an interface for creating objects in a superclass, allowing subclasses to alter the type of objects created.
+
+In Simple Terms:
+> It enables the delegation of object instantiation to child classes, offering a way to create objects without specifying their exact classes.
+
+![Factory Method Pattern](./images/factory-method-pattern.png)
+
+### Implementation:
+Consider a car manufacturing program with different car types (Sedan, SUV, Hatchback): 
+```ts
+abstract class Car {
+  constructor(public model: string, public productionYear: number) {}
+
+  abstract displayCarInfo(): void;
+}
+
+class Sedan extends Car {
+  displayCarInfo() {
+    console.log(`This is a Sedan. Model: ${this.model}, Production Year: ${this.productionYear}`);
+  }
+}
+
+class Hatchback extends Car {
+  displayCarInfo() {
+    console.log(`This is a Hatchback. Model: ${this.model}, Production Year: ${this.productionYear}`);
+  }
+}
+
+class CarFactory {
+  public createCar(type: string, model: string, productionYear: number): Car {
+    switch (type) {
+      case "Sedan":
+        return new Sedan(model, productionYear);
+      case "Hatchback":
+        return new Hatchback(model, productionYear);
+      default:
+        throw new Error("Invalid car type");
+    }
+  }
+}
+
+// Usage:
+const carFactory = new CarFactory();
+
+const sedan = carFactory.createCar("Sedan", "Camry", 2023);
+sedan.displayCarInfo(); // This is a Sedan. Model: Camry, Production Year: 2023
+
+const hatchback = carFactory.createCar("Hatchback", "Corolla", 2019);
+hatchback.displayCarInfo(); // // This is a Sedan. Model: Corolla, Production Year: 2019
+```
+
+### When To Use Factory Pattern ? ✅
+- **Uncertain Object Types:** If your software is meant to create different objects at runtime.
+- **Similar Classes:** When dealing with numerous classes sharing a common superclass.
+- **Pluggability and Flexibility:** Providing users with a way to extend a library with their own classes.
+
+### Advantages Of The Factory Pattern 🪄 :
+- **Decoupling 🚀:** Reduces coupling between client code and concrete classes, enhancing maintainability.
+- **Flexibility 🤸:** Allows easy addition of new object types without modifying existing client code.
+- **Encapsulation 🧳:** Encapsulates object creation details, making the factory responsible for instantiation.
+
+### Disadvantages of Factory Pattern 🆘 :
+- **Refactoring 🔄:** Introducing the Factory Pattern to an existing codebase might pose challenges during refactoring.
+- **Increased Number of Classes 📈:** The pattern can lead to a higher number of classes, potentially making the codebase more complex.
+- **Testing 🧪:** While aiding in writing testable code, complex factories can complicate the testing process, requiring additional setup.
