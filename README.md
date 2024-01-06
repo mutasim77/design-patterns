@@ -208,7 +208,7 @@ Builder is a creational design pattern facilitating the step-by-step constructio
 In simple words:
 > Builder helps in creating different versions of an object without cluttering the constructor.
 
-![Builder Design Pattern](./images/builder-design-pattern.png)
+![Builder Design Pattern](./images/builder-pattern.png)
 
 ### Implementation Example in TypeScript:
 ```ts
@@ -283,8 +283,8 @@ const director: PizzaDirector = new PizzaDirector(builder);
 const pizzaWithoutCheese: IPizza = director.buildMinimalPizza('Pepperoni', 'Medium');
 const pizzaWithCheese: IPizza = director.buildFullFeaturedPizza('Hawaiian', 'Small', true);
 
-console.log(pizzaWithoutCheese); // Pizza: {"name": "Pepperoni","size": "Medium","isCheese": false} 
-console.log(pizzaWithCheese); // Pizza: {"name": "Pepperoni","size": "Medium","isCheese": true} 
+console.log(pizzaWithoutCheese); // Pizza: { name: 'Pepperoni', size: 'Medium', isCheese: false} 
+console.log(pizzaWithCheese); // Pizza: { name: 'Hawaiian', size :'Small', isCheese: true} 
 ```
 This TypeScript code implements a simplified Builder pattern for creating pizza objects, allowing customization of attributes like name, size, and the presence of cheese.
 
