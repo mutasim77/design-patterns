@@ -55,7 +55,14 @@ Design patterns are reusable solutions to common problems that occur in software
    - [Factory Method 🏭](#factory-method-)
    - [Abstract Factory 🔨](#abstract-factory-)
 3. [Structural Design Patterns 🛠️](#structural-design-patterns-)
-4. [Behavioral Design Patterns 🔄](#behavioral-design-patterns-)
+   - [Adapter 🔌](#adapter-)
+   - [Bridge 🌉](#bridge-)
+   - [Composite 🌴](#composite-)
+   - [Decorator 🎨](#decorator-)
+   - [Facade 🏰](#facade-)
+   - [Flyweight 🪰](#flyweight-)
+   - [Proxy 🔗](#proxy-)
+5. [Behavioral Design Patterns 🔄](#behavioral-design-patterns-)
 
 # Creational Design Patterns 🏗
 Creational design patterns 🎨 revolve around the intricacies of object creation. They introduce a level of abstraction to the instantiation process, ensuring the system remains agnostic to the specifics of how its objects come into existence, are composed, and represented. These design patterns offer a mechanism for object creation that conceals the intricacies of the creation logic, steering away from direct object instantiation using the new operator. By doing so, they grant greater flexibility in determining the objects necessary for a given use case. Notable examples of creational design patterns encompass Singleton, Factory Method, Abstract Factory, Builder, and Prototype. 🚀
@@ -508,9 +515,11 @@ renderUI(new MacOSFactory());
 - **Limited Flexibility In Modifying Product Families 🚫:** Adding new types of products may require changing the core factory interface, violating the Open/Closed Principle.
 
 
-# Structural Design Patterns 🛠️
-
+# Structural Design Patterns 🛠
+Structural design patterns are a type of design pattern that deal with object composition and the structure of classes/objects. They help ensure that when a change is made in one part of a system, it doesn't require changes in other parts. This makes the system more flexible and easier to maintain.
 
 ![Structural Design Patterns](./images/structural-design-patterns.png)
 <br/>
 <hr/>
+
+## Adapter🔌
