@@ -595,7 +595,7 @@ The Bridge pattern is a structural design pattern that lets you split a large cl
 In simple words:
 > It's like a bridge between abstraction and implementation, enabling independent changes for flexibility.
 
-![Bridge](./images/bridge-pattern.png)
+![Bridge](./images/bridge-design-pattern.png)
 
 ### Let's implement:
 1. Implementor interface and concrete implementors:
