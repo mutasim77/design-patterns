@@ -523,3 +523,70 @@ Structural design patterns are a type of design pattern that deal with object co
 <hr/>
 
 ## Adapter🔌
+The Adapter Design Pattern is a software design pattern that allows the interface of an existing class to be used from another interface. It's often used to make existing classes work with others without modifying their source code. The Adapter Pattern is especially useful when the classes that need to communicate with each other do not have compatible interfaces.
+
+In simple words:
+> Adapter allows objects with incompatible interfaces to collaborate.
+
+![Adapter](./images/adapter-pattern.png)
+
+### Classical Implementation:
+```ts
+// Duck class
+class Duck {
+  quack(): void {
+    console.log("Quack, quack!");
+  }
+
+  fly(): void {
+    console.log("I'm flying!");
+  }
+}
+
+// Animal interface
+interface Animal {
+  makeSound(): void;
+  move(): void;
+}
+
+// DuckAdapter class
+class DuckAdapter implements Animal {
+  private duck: Duck;
+
+  constructor(duck: Duck) {
+    this.duck = duck;
+  }
+
+  makeSound(): void {
+    this.duck.quack();
+  }
+
+  move(): void {
+    this.duck.fly();
+  }
+}
+
+// Using the Duck and DuckAdapter
+const duck = new Duck();
+const adapter = new DuckAdapter(duck);
+
+// Now, the duck can be used as an animal
+adapter.makeSound(); // Output: Quack, quack!
+adapter.move();      // Output: I'm flying!
+```
+### When To Use Adapter Pattern ? ✅
+- **Incompatibility of Interfaces:** Use when different parts can't communicate due to different interfaces.
+- **Alternatives to Multiple Inheritance:** In languages without it, Adapter helps inherit behavior from multiple sources.
+- **Abstracting Volatile Classes:** Shields the app from changes in frequently changing classes.
+
+### Advantages of Adapter Pattern 🪄 :
+- **Reusability and Flexibility:** Reuse existing code without major changes.
+- **Decoupling:** Reduces dependencies for easier maintenance.
+- **Interoperability:** Enables different parts to work together despite interface mismatches.
+
+### Disadvantages of Adapter Pattern 🆘 :
+- **Overuse or Unnecessary Use:** Be cautious to avoid unnecessary complexity.
+- **Performance Overhead:** Involves some indirection; may impact performance in critical systems.
+- **Potential for Confusion:** Clear documentation needed for developers unfamiliar with the codebase.
+
+## Bridge 🌉
