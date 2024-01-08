@@ -679,3 +679,127 @@ databaseService.fetchData("db.users.find({})"); // use MongoDB database
 - **Over-engineering 🛠️:** Adds complexity if abstraction and implementation are stable.
 - **Design Difficulty 🤔:** Choosing the right abstraction can be challenging.
 - **Development and Maintenance Costs 💸:** Introducing the Bridge pattern requires refactoring, increasing complexity.
+
+
+## Composite 🌴
+The Composite pattern is a structural design pattern that lets you compose objects into tree-like structures and then work with these structures as if they were individual objects.
+
+In simple words:
+> It lets clients treat the individual objects in a uniform manner.
+
+![Composite Pattern](./images/composite-pattern.png)
+
+## Implementation in TS:
+```ts
+// Component
+interface Employee {
+  getName(): string;
+  getSalary(): number;
+  getRole(): string;
+}
+
+// Leaf
+class Developer implements Employee {
+  constructor(private name: string, private salary: number) {}
+
+  getName(): string {
+    return this.name;
+  }
+
+  getSalary(): number {
+    return this.salary;
+  }
+
+  getRole(): string {
+    return "Developer";
+  }
+}
+
+// Another Leaf
+class Designer implements Employee {
+  constructor(private name: string, private salary: number) {}
+
+  getName(): string {
+    return this.name;
+  }
+
+  getSalary(): number {
+    return this.salary;
+  }
+
+  getRole(): string {
+    return "Designer";
+  }
+}
+
+// Composite
+interface CompositeEmployee extends Employee {
+  addEmployee(employee: Employee): void;
+  removeEmployee(employee: Employee): void;
+  getEmployees(): Employee[];
+}
+
+class Manager implements CompositeEmployee {
+  private employees: Employee[] = [];
+
+  constructor(private name: string, private salary: number) {}
+
+  getName(): string {
+    return this.name;
+  }
+
+  getSalary(): number {
+    return this.salary;
+  }
+
+  getRole(): string {
+    return "Manager";
+  }
+
+  addEmployee(employee: Employee) {
+    this.employees.push(employee);
+  }
+
+  removeEmployee(employee: Employee) {
+    const index = this.employees.indexOf(employee);
+    if (index !== -1) {
+      this.employees.splice(index, 1);
+    }
+  }
+
+  getEmployees(): Employee[] {
+    return this.employees;
+  }
+}
+```
+Here's how you could use these classes:
+```ts
+const dev1 = new Developer("John Doe", 12000);
+const dev2 = new Developer("Karl Durden", 15000);
+const designer = new Designer("Mark", 10000);
+
+const manager = new Manager("Michael", 25000);
+manager.addEmployee(dev1);
+manager.addEmployee(dev2);
+manager.addEmployee(designer);
+
+console.log(manager); // { name : "Michael", salary: 25000, employees: [ { name: "John Doe", salary: 12000 } ...] } 
+```
+
+### When To Use Composite Pattern ? ✅
+- **Tree-like Object Structure:** Useful when objects form a tree-like pattern, such as organizational structures in companies.
+- **Part-Whole Hierarchies:** Natural choice for part-whole hierarchies, treating parts and wholes the same way.
+- **Uniform Treatment by Clients:** Clients treat all objects uniformly within the composite structure, simplifying client code.
+
+### Advantages of Composite Pattern 🪄 :
+- **Simplifies Client Code 🎯:** Uniform treatment of objects simplifies client code.
+- **Easily Adds New Components 🌱:** New leaf or composite objects can be added effortlessly by implementing the component interface.
+- **Hierarchical Representation 🏰:** Natural fit for systems with hierarchical structures.
+
+### Disadvantages of Composite Pattern 🆘 :
+- **SRP Violation 🚧:** May violate the Single Responsibility Principle (SRP).
+- **Challenges with Common Interface 🤹‍♂️:** Providing a common interface for classes with vastly different functionalities can be difficult.
+- **Indirect Coupling 🔄:** Changes in one object can indirectly affect another, even if not directly linked.
+
+
+## Decorator 🎨
