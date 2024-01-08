@@ -522,7 +522,7 @@ Structural design patterns are a type of design pattern that deal with object co
 <br/>
 <hr/>
 
-## Adapter🔌
+## Adapter 🔌
 The Adapter Design Pattern is a software design pattern that allows the interface of an existing class to be used from another interface. It's often used to make existing classes work with others without modifying their source code. The Adapter Pattern is especially useful when the classes that need to communicate with each other do not have compatible interfaces.
 
 In simple words:
