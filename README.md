@@ -590,3 +590,96 @@ adapter.move();      // Output: I'm flying!
 - **Potential for Confusion:** Clear documentation needed for developers unfamiliar with the codebase.
 
 ## Bridge 🌉
+The Bridge pattern is a structural design pattern that lets you split a large class or a set of closely related classes into two separate hierarchies—abstraction and implementation—which can be developed independently of each other.
+
+In simple words:
+> It's like a bridge between abstraction and implementation, enabling independent changes for flexibility.
+
+![Bridge](./images/bridge-pattern.png)
+
+### Let's implement:
+1. Implementor interface and concrete implementors:
+```ts
+interface Database {
+  connect(): void;
+
+  query(sql: string): any;
+
+  close(): void;
+}
+
+class PostgreSQLDatabase implements Database {
+  connect(): void {
+    console.log("Connecting to PostgreSQL database.");
+  }
+
+  query(sql: string): any {
+    console.log(`Executing query '${sql}' on PostgreSQL database.`);
+    // Implementation of query execution
+  }
+
+  close(): void {
+    console.log("Closing connection to PostgreSQL database.");
+  }
+}
+
+class MongoDBDatabase implements Database {
+  connect(): void {
+    console.log("Connecting to MongoDB database.");
+  }
+
+  query(sql: string): any {
+    console.log(`Executing query '${sql}' on MongoDB database.`);
+    // Implementation of query execution
+  }
+
+  close(): void {
+    console.log("Closing connection to MongoDB database.");
+  }
+}
+```
+2. Abstraction and refined abstractions:
+```ts
+abstract class DatabaseService {
+  protected database: Database;
+
+  constructor(database: Database) {
+    this.database = database;
+  }
+
+  abstract fetchData(query: string): any;
+}
+
+class ClientDatabaseService extends DatabaseService {
+  fetchData(query: string): any {
+    this.database.connect();
+    const result = this.database.query(query);
+    this.database.close();
+    return result;
+  }
+}
+```
+3. Client code:
+```ts
+let databaseService = new ClientDatabaseService(new PostgreSQLDatabase());
+databaseService.fetchData("SELECT * FROM users;"); // use PostgreSQL database
+
+databaseService = new ClientDatabaseService(new MongoDBDatabase());
+databaseService.fetchData("db.users.find({})"); // use MongoDB database
+```
+> In this example, we've created a "bridge" that decouples the high-level DatabaseService class from the specifics of the various Database implementations. By doing this, you can add a new type of database to the application without changing the DatabaseService class or the client code. Also, at runtime, the client can decide which database to use.
+
+### When To Use Bridge Pattern ? ✅
+- **Hide Implementation Details:** Expose only necessary client methods for cleaner code.
+- **Implementation-Specific Behavior:** Enable different platform implementations without altering client code.
+- Prevent Monolithic Designs:** Promote modularity to avoid widespread implications of changes.
+
+### Advantages of Bridge Pattern 🪄 :
+- **Decoupling 🧩:** Separates abstraction and implementation for independent evolution.
+- **Improved Readability 📚:** Enhances code readability and maintainability.
+- **Runtime Binding 🔄:** Allows changing implementations at runtime.
+
+### Disadvantages of Bridge Pattern 🆘 :
+- **Over-engineering 🛠️:** Adds complexity if abstraction and implementation are stable.
+- **Design Difficulty 🤔:** Choosing the right abstraction can be challenging.
+- **Development and Maintenance Costs 💸:** Introducing the Bridge pattern requires refactoring, increasing complexity.
