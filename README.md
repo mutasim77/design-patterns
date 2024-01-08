@@ -602,9 +602,7 @@ In simple words:
 ```ts
 interface Database {
   connect(): void;
-
   query(sql: string): any;
-
   close(): void;
 }
 
@@ -615,7 +613,6 @@ class PostgreSQLDatabase implements Database {
 
   query(sql: string): any {
     console.log(`Executing query '${sql}' on PostgreSQL database.`);
-    // Implementation of query execution
   }
 
   close(): void {
@@ -630,7 +627,6 @@ class MongoDBDatabase implements Database {
 
   query(sql: string): any {
     console.log(`Executing query '${sql}' on MongoDB database.`);
-    // Implementation of query execution
   }
 
   close(): void {
