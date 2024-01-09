@@ -881,3 +881,85 @@ console.log("Description: " + coffeeWithMilk.description()); // Description: Sim
 - **Many Small Objects 🧩:** Can lead to situations with many small objects, complicating the design and debugging. 
 - **Difficult Removal of Specific Wrapper 🔄:** It's challenging to remove a specific wrapper from the wrappers stack. 
 - **Complex Initial Configuration 🤯:** Initial configuration code of layers might look ugly in complex systems with many decorators. 
+
+## Facade 🏰
+
+In simple words:
+> It provides a simplified interface to a complex subsystem.
+
+![Facade Pattern](./images/facade-pattern.png)
+
+## Implementation in TS:
+```ts
+// Subsystem 1
+class AudioPlayer {
+  play(): string {
+    return "Playing audio";
+  }
+}
+
+// Subsystem 2
+class VideoPlayer {
+  play(): string {
+    return "Playing video";
+  }
+}
+
+// Subsystem 3
+class Projector {
+  display(): string {
+    return "Projector displaying content";
+  }
+}
+
+// Facade
+class MultimediaFacade {
+  private audioPlayer: AudioPlayer;
+  private videoPlayer: VideoPlayer;
+  private projector: Projector;
+
+  constructor(audioPlayer: AudioPlayer, videoPlayer: VideoPlayer, projector: Projector) {
+    this.audioPlayer = audioPlayer;
+    this.videoPlayer = videoPlayer;
+    this.projector = projector;
+  }
+
+  startMovie(): string {
+    const audio = this.audioPlayer.play();
+    const video = this.videoPlayer.play();
+    const display = this.projector.display();
+
+    return `${audio}\n${video}\n${display}`;
+  }
+
+  stopMovie(): string {
+    return "Stopping multimedia playback";
+  }
+}
+
+// Example usage
+const audioPlayer = new AudioPlayer();
+const videoPlayer = new VideoPlayer();
+const projector = new Projector();
+
+const multimediaFacade = new MultimediaFacade(audioPlayer, videoPlayer, projector);
+
+console.log(multimediaFacade.startMovie()); // Playing audio, Playing video, Projector displaying content
+console.log(multimediaFacade.stopMovie()); // Stopping multimedia playback
+```
+
+### When To Use Facade Pattern ? ✅
+- **Rampant Dependencies:** Reduces high coupling by providing a unified interface.
+- **Overwhelming Complexity:** Wraps complex subsystems for a straightforward interaction.
+- **Simplified API Need:** For libraries or APIs, offers only essential functionalities.
+
+### Advantages of Facade Pattern 🪄 :
+- **Simplified Interface 🛡️:** Shields users from subsystem complexities.
+- **Reduced Dependencies 🤝:** Minimizes client code dependencies on subsystems.
+- **Decoupling 🔗:** Changes in subsystems minimally impact clients.
+- **Ease of Use 👤:** Abstracts complexities, making subsystems user-friendly.
+
+### Disadvantages of Facade Pattern 🆘 :
+- **Over-abstraction 🤯:** May introduce unnecessary complexity for simple subsystems.
+- **Limited Flexibility 🚫:** Restricts access to full subsystem functionality.
+- **Hiding Information 🕵️‍♂️:** May conceal crucial details useful in specific scenarios.
