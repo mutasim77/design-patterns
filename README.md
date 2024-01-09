@@ -1,6 +1,6 @@
 <br>
 <p align="center">
-  <img src="./.github/banner.png" width="100%" height="270px" />
+  <img src="./.github/banner.png" width="100%"/>
 </p>
 
 <p align="center">
@@ -803,3 +803,81 @@ console.log(manager); // { name : "Michael", salary: 25000, employees: [ { name:
 
 
 ## Decorator 🎨
+The Decorator design pattern is a structural design pattern that allows you to dynamically add or override behaviour in an existing object without changing its implementation. This pattern is particularly useful when you want to modify the behavior of an object without affecting other objects of the same class.
+
+In simple words:
+> Dynamically enhances object behavior.
+
+![Decorator Pattern](./images/decorator-pattern.png)
+
+## Implementation in TS:
+```ts
+// Component
+interface Coffee {
+  cost(): number;
+  description(): string;
+}
+
+// ConcreteComponent
+class SimpleCoffee implements Coffee {
+  cost() {
+    return 10;
+  }
+
+  description() {
+    return "Simple coffee";
+  }
+}
+
+// Decorator
+abstract class CoffeeDecorator implements Coffee {
+  protected coffee: Coffee;
+
+  constructor(coffee: Coffee) {
+    this.coffee = coffee;
+  }
+
+  abstract cost(): number;
+  abstract description(): string;
+}
+
+// ConcreteDecorator
+class MilkDecorator extends CoffeeDecorator {
+  constructor(coffee: Coffee) {
+    super(coffee);
+  }
+
+  cost() {
+    return this.coffee.cost() + 2;
+  }
+
+  description() {
+    return `${this.coffee.description()}, with milk`;
+  }
+}
+
+// Usage
+const plainCoffee = new SimpleCoffee();
+console.log("Plain Coffee Cost: $" + plainCoffee.cost()); // Plain Coffee Cost: $10
+console.log("Description: " + plainCoffee.description()); // Description: Simple coffee
+
+const coffeeWithMilk = new MilkDecorator(plainCoffee);
+console.log("Coffee with Milk Cost: $" + coffeeWithMilk.cost()); // Coffee with Milk Cost: $12
+console.log("Description: " + coffeeWithMilk.description()); // Description: Simple coffee, with milk
+
+```
+
+### When To Use Decorator Pattern ? ✅
+- **Add Responsibilities Dynamically:** When adding responsibilities to objects without affecting others, such as adding formatting options to a text editor.
+- **Dynamic Addition and Removal:** For adding and removing responsibilities from an object at runtime.
+- **Easily Extend the System:** For future extension, allowing the system to be easily extended with new decorator classes.
+
+### Advantages of Decorator Pattern 🪄 :
+- **Flexible Alternative to Subclassing 🔄:** Adds new behaviors to objects without affecting other objects of the same class. 
+- **Runtime Addition and Removal 🕰️:** Decorators can be added to and removed from an object dynamically at runtime. 
+- **Code Reuse and Reduction 🔄:** Encapsulates specific features in decorator classes, promoting code reuse and reducing redundancy. 
+
+### Disadvantages of Decorator Pattern 🆘 :
+- **Many Small Objects 🧩:** Can lead to situations with many small objects, complicating the design and debugging. 
+- **Difficult Removal of Specific Wrapper 🔄:** It's challenging to remove a specific wrapper from the wrappers stack. 
+- **Complex Initial Configuration 🤯:** Initial configuration code of layers might look ugly in complex systems with many decorators. 
