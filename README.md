@@ -63,6 +63,16 @@ Design patterns are reusable solutions to common problems that occur in software
    - [Flyweight 🪰](#flyweight-)
    - [Proxy 🔗](#proxy-)
 5. [Behavioral Design Patterns 🧠](#behavioral-design-patterns-)
+   - [Chain of Responsibility ⛓️](#chain-of-reponsibility-)
+   - [Command 👮‍♂️](#command-)
+   - [Iterator 🔍](#iterator-)
+   - [Mediator 🤝](#mediator-)
+   - [Memento 💾](#memento-)
+   - [Observer 👀](#observer-)
+   - [State 📄](#state-)
+   - [Strategy 🎯](#strategy-)
+   - [Template Method 🏛️](#template-method-)
+   - [Visitor 🚶‍♂️](#visitor-)
 
 # Creational Design Patterns 🏗
 Creational design patterns 🎨 revolve around the intricacies of object creation. They introduce a level of abstraction to the instantiation process, ensuring the system remains agnostic to the specifics of how its objects come into existence, are composed, and represented. These design patterns offer a mechanism for object creation that conceals the intricacies of the creation logic, steering away from direct object instantiation using the new operator. By doing so, they grant greater flexibility in determining the objects necessary for a given use case. Notable examples of creational design patterns encompass Singleton, Factory Method, Abstract Factory, Builder, and Prototype. 🚀
@@ -1129,3 +1139,8 @@ internetUser.accessWebsite("inappropriate.com"); // Access to bad.com is denied 
 - **Reduced Performance:** Depending on the use case, the proxy might introduce some performance overhead.
 
 # Behavioral Design Patterns 🧠
+
+
+![Behavioral Design Patterns](./images/behavioral-design-patterns.png)
+<br/>
+<hr/>
