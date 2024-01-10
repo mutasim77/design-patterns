@@ -62,7 +62,7 @@ Design patterns are reusable solutions to common problems that occur in software
    - [Facade 🏰](#facade-)
    - [Flyweight 🪰](#flyweight-)
    - [Proxy 🔗](#proxy-)
-5. [Behavioral Design Patterns 🔄](#behavioral-design-patterns-)
+5. [Behavioral Design Patterns 🧠](#behavioral-design-patterns-)
 
 # Creational Design Patterns 🏗
 Creational design patterns 🎨 revolve around the intricacies of object creation. They introduce a level of abstraction to the instantiation process, ensuring the system remains agnostic to the specifics of how its objects come into existence, are composed, and represented. These design patterns offer a mechanism for object creation that conceals the intricacies of the creation logic, steering away from direct object instantiation using the new operator. By doing so, they grant greater flexibility in determining the objects necessary for a given use case. Notable examples of creational design patterns encompass Singleton, Factory Method, Abstract Factory, Builder, and Prototype. 🚀
@@ -1054,8 +1054,78 @@ textEditor.printStyles(); // print all styles...
 - **Potential Overhead:** Managing shared state might outweigh benefits in simple scenarios.
 
 ## Proxy 🔗 
+The Proxy design pattern is a structural pattern that acts as a surrogate or placeholder for another object, controlling access to it. This pattern is useful when we want to add an extra layer of control over the functionality of an object, such as adding security checks, lazy loading, or logging.
 
 In simple words:
->
+> A Proxy acts as a middleman, standing between a client and an object. It controls access to the real object, allowing for additional functionalities or restrictions.
 
 ![Proxy Pattern](./images/proxy-pattern.png)
+
+### Implementation : 
+```ts
+// Subject interface representing the internet
+interface Internet {
+  accessWebsite(website: string): void;
+}
+
+// RealSubject representing the actual internet
+class RealInternet implements Internet {
+  accessWebsite(website: string): void {
+    console.log(`Accessing website: ${website}`);
+  }
+}
+
+// Proxy representing a Fortinet-like proxy internet for content filtering
+class ProxyInternet implements Internet {
+  private realInternet: RealInternet | null = null;
+  private restrictedWebsites: Set<string> = new Set<string>();
+
+  addRestrictedWebsite(website: string): void {
+    this.restrictedWebsites.add(website);
+    console.log(`Website ${website} is restricted.`);
+  }
+
+  accessWebsite(website: string): void {
+    // Check if the website is restricted
+    if (this.restrictedWebsites.has(website)) {
+      console.log(`Access to ${website} is denied due to content restrictions.`);
+      return;
+    }
+
+    // Only access the real internet if the website is not restricted
+    if (this.realInternet === null) {
+      this.realInternet = new RealInternet();
+    }
+
+    this.realInternet.accessWebsite(website);
+  }
+}
+
+
+// Usage:
+const internetUser: Internet = new ProxyInternet();
+
+// Configuring the proxy internet to restrict access to certain websites
+const proxyInternet = internetUser as ProxyInternet;
+proxyInternet.addRestrictedWebsite("bad.com"); // Website bad.com is restricted.
+
+// The user accesses the internet through the proxy
+internetUser.accessWebsite("example.com"); // Accessing website: example.com
+internetUser.accessWebsite("inappropriate.com"); // Access to bad.com is denied due to content restrictions.
+```
+
+### When To Use Proxy Pattern ? ✅
+- **Access Control:** When you need to control access to an object, for example, adding authentication or authorization checks.
+- **Lazy Loading:** To delay the creation and initialization of an object until it's actually needed.
+- **Logging or Monitoring:** To log or monitor the interactions with the real object.
+
+### Advantages of Proxy Pattern 🪄 :
+- **Controlled Access:** Allows for controlled access to the real object.
+- **Lazy Loading:** Supports lazy loading for resource-intensive objects.
+- **Enhanced Functionality:** Enables adding functionalities like logging, security checks, or caching.
+
+### Disadvantages of Proxy Pattern 🆘 :
+- **Complexity:** Introduces an additional layer, potentially increasing code complexity.
+- **Reduced Performance:** Depending on the use case, the proxy might introduce some performance overhead.
+
+# Behavioral Design Patterns 🧠
