@@ -1121,7 +1121,7 @@ proxyInternet.addRestrictedWebsite("bad.com"); // Website bad.com is restricted.
 
 // The user accesses the internet through the proxy
 internetUser.accessWebsite("example.com"); // Accessing website: example.com
-internetUser.accessWebsite("inappropriate.com"); // Access to bad.com is denied due to content restrictions.
+internetUser.accessWebsite("bad.com"); // Access to bad.com is denied due to content restrictions.
 ```
 
 ### When To Use Proxy Pattern ? ✅
@@ -1138,9 +1138,191 @@ internetUser.accessWebsite("inappropriate.com"); // Access to bad.com is denied 
 - **Complexity:** Introduces an additional layer, potentially increasing code complexity.
 - **Reduced Performance:** Depending on the use case, the proxy might introduce some performance overhead.
 
-# Behavioral Design Patterns 🧠
 
+# Behavioral Design Patterns 🧠
+Behavioral design patterns help organize how different parts of a software system communicate and collaborate. They provide solutions for common challenges in defining algorithms and managing responsibilities, enhancing flexibility and extensibility. Essentially, these patterns guide the flow of communication and behavior in a software application.
 
 ![Behavioral Design Patterns](./images/behavioral-design-patterns.png)
 <br/>
 <hr/>
+
+## Chain of Responsibility ⛓️
+The Chain of Responsibility is a behavioral design pattern that lets you pass requests along a chain of handlers. Upon receiving a request, each handler decides either to process the request or to pass it to the next handler in the chain.
+
+In simple words:
+> Imagine you have a series of processing tasks, and each task can be handled by a different entity. The Chain of Responsibility pattern allows you to link these entities in a chain. When a task is presented, each entity in the chain has the chance to handle it. If one entity can handle it, the chain stops; otherwise, the task moves along the chain until it finds a handler.
+
+![Chain of Responsibility Pattern](./images/chain-of-responsibility.png)
+
+### Implementation : 
+```ts
+// Handler interface
+interface Approver {
+    setNext(nextApprover: Approver): Approver;
+    processRequest(amount: number): void;
+}
+
+// Concrete Handler 1
+class Manager implements Approver {
+    private nextApprover: Approver | null = null;
+
+    setNext(nextApprover: Approver): Approver {
+        this.nextApprover = nextApprover;
+        return nextApprover;
+    }
+
+    processRequest(amount: number): void {
+        if (amount <= 1000) {
+            console.log(`Manager approves the purchase of $${amount}.`);
+        } else if (this.nextApprover) {
+            this.nextApprover.processRequest(amount);
+        }
+    }
+}
+
+// Concrete Handler 2
+class Director implements Approver {
+    private nextApprover: Approver | null = null;
+
+    setNext(nextApprover: Approver): Approver {
+        this.nextApprover = nextApprover;
+        return nextApprover;
+    }
+
+    processRequest(amount: number): void {
+        if (amount <= 5000) {
+            console.log(`Director approves the purchase of $${amount}.`);
+        } else if (this.nextApprover) {
+            this.nextApprover.processRequest(amount);
+        }
+    }
+}
+
+// Concrete Handler 3
+class VicePresident implements Approver {
+    private nextApprover: Approver | null = null;
+
+    setNext(nextApprover: Approver): Approver {
+        this.nextApprover = nextApprover;
+        return nextApprover;
+    }
+
+    processRequest(amount: number): void {
+        if (amount <= 10000) {
+            console.log(`Vice President approves the purchase of $${amount}.`);
+        } else if (this.nextApprover) {
+            this.nextApprover.processRequest(amount);
+        }
+    }
+}
+
+// Client
+const manager = new Manager();
+
+// Set up the chain of responsibility
+manager
+  .setNext(new Director())
+  .setNext(new VicePresident());
+
+// Test the chain with different purchase amounts
+manager.processRequest(800);   // Manager approves the purchase of $800
+manager.processRequest(4500);  // Director approves the purchase of $4500
+manager.processRequest(10000); // Vice President approves the purchase of $10000
+```
+
+### When To Use Chain of Responsibility Pattern ? ✅
+- **Coupling:** Keep things simple and scalable by using this pattern to hide details from the requester.
+- **Multiple Conditionals:** Organize messy code with lots of "if" statements by spreading them out.
+- **Code Duplication:** Gather scattered, similar code in one place for better organization.
+- **Sequential Processing:** Use it when tasks must happen in a specific order, like following steps in a recipe.
+
+### Advantages of Chain of Responsibility Pattern 🪄 :
+- **Decoupling:** Separate sender and receiver for cleaner, modular code.
+- **Dynamic Configuration:** Easily change how things work on-the-fly.
+- **Easy Responsibility Management:** Add or remove tasks effortlessly.
+
+### Disadvantages of Chain of Responsibility Pattern 🆘 :
+- **Handling Overhead:** Might slow things down a bit.
+- **Debugging Challenges:** Finding problems can be tricky.
+- **Responsibility Overload:** Avoid giving one person too many jobs.
+
+## Command 👮‍♂️
+The Command design pattern transforms requests into standalone objects, making it easy to pass requests as method arguments, delay or queue their execution, and support undoable operations.
+
+In simple words:
+> It encapsulates actions, letting clients operate independently from receivers.
+
+![Command Pattern](./images/command-pattern.png)
+
+### Classic implementation : 
+```ts
+```
+
+### When To Use Command Pattern ? ✅
+- **Complex Commands:** For operations involving multiple methods on different objects, simplifying code by encapsulating them.
+- **Parameterized Operations:** When an object needs to perform an operation with the specific action specified at runtime.
+- **Undo/Redo Support:** Ideal for applications requiring undoable operations; each action is represented as a command.
+- **Job Queue Implementation:** Useful for managing a queue of tasks executed at different times or by different threads.
+
+### Advantages of Command Pattern 🪄 :
+- **Extension:** Easily add new commands without altering existing code for improved system extensibility.
+- **Complex Commands:** Encapsulate multi-step operations for cleaner and more manageable code.
+- **Deferred and Asynchronous Operations:** Execute operations at different times or by different threads, allowing non-blocking execution.
+
+### Disadvantages of Command Pattern 🆘 :
+- **Dependency Management:** Concrete Command classes may require contextual initialization, adding some complexity.
+- **Debugging Challenges:** Dynamic execution and deferred commands may make debugging less straightforward.
+- **Lack of Direct Feedback:** Encapsulation may complicate obtaining direct results from command execution.
+
+## Iterator 🔍 
+The Iterator pattern is a design pattern that allows sequential access to elements in a collection, without exposing its underlying representation. It provides a way to access the elements of an aggregate object sequentially without exposing the underlying details.
+
+In simple words:
+> It allows accessing elements without exposing how they're stored.
+
+![Iterator Pattern](./images/iterator-pattern.png)
+
+### Implementation in TS : 
+```ts
+```
+
+### When To Use Iterator Pattern ? ✅
+- **Complex Navigation Logic:** Useful when traversing complex data structures like trees or graphs gets complicated and entangled with business logic.
+- **Multiple Traversal Algorithms:** Access elements of a collection without revealing its structure.
+
+### Advantages of Iterator Pattern 🪄 :
+- **Simplifies Client Code:** Offers a common interface for traversing different collections, simplifying client code.
+- **Enables Different Traversals:** Supports various traversal types - forward, backward, or random access, based on application needs.
+- **Uniform Interface:** Provides a consistent interface for traversing diverse collections, aiding generic code.
+
+### Disadvantages of Iterator Pattern 🆘 :
+- **Increased Complexity:** Introduces more classes and interfaces, potentially adding complexity to the codebase.
+- **Performance Considerations:** Depending on implementation, performance may be impacted, especially for computationally expensive hasNext() or next() methods.
+- **Memory Consumption:** Multiple iterator instances can increase memory consumption, particularly for large collections.
+
+## Mediator 🤝 
+The Mediator pattern is a design pattern that defines an object to centralize communication between different components, promoting loose coupling. It allows components to interact without directly referencing each other, reducing dependencies.
+
+In simple words:
+> It acts as a central hub, enabling components to communicate indirectly, minimizing direct connections.
+
+![Mediator Pattern](./images/mediator-pattern.png)
+
+### Implementation in TS : 
+```ts
+```
+
+### When To Use Mediator Pattern ? ✅
+- **Complex Communication:** Useful when components need to communicate in a complex way, and direct connections become convoluted.
+- **Reducing Dependencies:** Employed to avoid tight dependencies between components, promoting flexibility.
+- **Centralized Control:** When a centralized control point for communication is beneficial, providing a mediator makes sense.
+
+### Advantages of Mediator Pattern 🪄 :
+- **Decouples Components:** Reduces direct connections between components, promoting cleaner and more maintainable code.
+- **Centralized Communication:** Streamlines communication through a central mediator, simplifying the coordination of components.
+- **Easier Maintenance:** Changes in communication logic can be made in one place (the mediator), easing maintenance.
+
+### Disadvantages of Mediator Pattern 🆘 :
+- **Mediator Complexity:** The mediator itself may become complex as more components are added, potentially introducing its own challenges.
+- **Single Point of Failure:** The mediator becomes a critical point; if it fails, the entire communication system may be affected.
+- **Learning Curve:** Developers may need time to understand and adapt to the mediator pattern, potentially slowing down initial development.
