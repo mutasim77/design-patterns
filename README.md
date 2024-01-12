@@ -1256,7 +1256,80 @@ In simple words:
 
 ### Classic implementation : 
 ```ts
+// Command interface
+interface Command {
+    execute(): void;
+}
+
+// Concrete Command 1: Light On
+class LightOnCommand implements Command {
+    private light: Light;
+
+    constructor(light: Light) {
+        this.light = light;
+    }
+
+    execute(): void {
+        this.light.turnOn();
+    }
+}
+
+// Concrete Command 2: Light Off
+class LightOffCommand implements Command {
+    private light: Light;
+
+    constructor(light: Light) {
+        this.light = light;
+    }
+
+    execute(): void {
+        this.light.turnOff();
+    }
+}
+
+// Receiver: Light
+class Light {
+    turnOn(): void {
+        console.log("Light is ON");
+    }
+
+    turnOff(): void {
+        console.log("Light is OFF");
+    }
+}
+
+// Invoker: Remote Control
+class RemoteControl {
+    private command: Command | null = null;
+
+    setCommand(command: Command): void {
+        this.command = command;
+    }
+
+    pressButton(): void {
+        if (this.command) {
+            this.command.execute();
+        } else {
+            console.log("No command assigned.");
+        }
+    }
+}
+
+// Client Code
+const light = new Light();
+const lightOnCommand = new LightOnCommand(light);
+const lightOffCommand = new LightOffCommand(light);
+
+const remote = new RemoteControl();
+
+remote.setCommand(lightOnCommand);
+remote.pressButton(); // Light is ON
+
+remote.setCommand(lightOffCommand);
+remote.pressButton(); // Light is OFF
 ```
+
+> NOTE: This is a basic TypeScript implementation of a Command pattern, but in reality, it can encompass additional functionalities such as performing undo, redo, and more.
 
 ### When To Use Command Pattern ? ✅
 - **Complex Commands:** For operations involving multiple methods on different objects, simplifying code by encapsulating them.
@@ -1282,9 +1355,42 @@ In simple words:
 
 ![Iterator Pattern](./images/iterator-pattern.png)
 
-### Implementation in TS : 
+### Simple Implementation: 
 ```ts
+class ArrayIterator<T> {
+  private collection: T[];
+  private position: number = 0;
+
+  constructor(collection: T[]) {
+    this.collection = collection;
+  }
+
+  public next(): T {
+    const result: T = this.collection[this.position];
+    this.position += 1;
+    return result;
+  }
+
+  public hasNext(): boolean {
+    return this.position < this.collection.length;
+  }
+}
+
+// Usage
+const stringArray = ["Hello", "World", "!"];
+const numberArray = [1, 2, 3, 4, 5];
+
+const stringIterator = new ArrayIterator<string>(stringArray);
+const numberIterator = new ArrayIterator<number>(numberArray);
+
+console.log(numberIterator.next()); // 1
+
+while (stringIterator.hasNext()) {
+  console.log(stringIterator.next()); // Logs 'Hello', 'World', '!'
+}
 ```
+
+> NOTE: This was a simple TypeScript implementation of an iterator, but in reality, it can include more functionalities such as traversing in reverse and so on.
 
 ### When To Use Iterator Pattern ? ✅
 - **Complex Navigation Logic:** Useful when traversing complex data structures like trees or graphs gets complicated and entangled with business logic.
@@ -1310,6 +1416,60 @@ In simple words:
 
 ### Implementation in TS : 
 ```ts
+interface IUser {
+    notify(message: string): void;
+    receive(message: string): void;
+}
+
+class Mediator {
+    private users: Set<IUser> = new Set();
+
+    addUser(user: IUser): void {
+        this.users.add(user);
+    }
+
+    notifyUsers(message: string, originator: IUser): void {
+        for (const user of this.users) {
+            if (user !== originator) {
+                user.receive(message);
+            }
+        }
+    }
+}
+
+class User implements IUser {
+    private mediator: Mediator;
+    private name: string;
+
+    constructor(mediator: Mediator, name: string) {
+        this.mediator = mediator;
+        this.name = name;
+        this.mediator.addUser(this);
+    }
+
+    notify(message: string): void {
+        console.log(`${this.name} sending message: ${message}`);
+        this.mediator.notifyUsers(message, this);
+    }
+
+    receive(message: string): void {
+        console.log(`${this.name} received message: ${message}`);
+    }
+}
+
+// Example Usage
+const mediator = new Mediator();
+const user1 = new User(mediator, 'User1');
+const user2 = new User(mediator, 'User2');
+const user3 = new User(mediator, 'User3');
+
+user1.notify('Hello User2!');
+user2.notify('Hi there!');
+user3.notify('Greetings, everyone!');
+
+// "User1" sending message: "Hello User2!" 
+// "User2" received message: "Hello User2! 
+// "User3" received message: "Hello User2!" 
 ```
 
 ### When To Use Mediator Pattern ? ✅
@@ -1326,3 +1486,93 @@ In simple words:
 - **Mediator Complexity:** The mediator itself may become complex as more components are added, potentially introducing its own challenges.
 - **Single Point of Failure:** The mediator becomes a critical point; if it fails, the entire communication system may be affected.
 - **Learning Curve:** Developers may need time to understand and adapt to the mediator pattern, potentially slowing down initial development.
+
+
+## Memento 💾 
+The Memento pattern is a behavioral design pattern that allows an object's state to be captured and restored at a later time without exposing its internal structure. It enables the ability to undo or rollback changes and is particularly useful when dealing with the history or snapshots of an object's state.
+
+In simple words:
+> Lets you save and restore the previous state of an object
+
+![Memento Pattern](./images/memento-pattern.png)
+
+### Implementation in TS : 
+```ts
+// Memento
+class EditorMemento {
+    private state: string;
+
+    constructor(state: string) {
+        this.state = state;
+    }
+
+    getState(): string {
+        return this.state;
+    }
+}
+
+// Originator
+class TextDocument {
+    private text!: string;
+
+    createMemento(): EditorMemento {
+        return new EditorMemento(this.text);
+    }
+
+    restoreMemento(memento: EditorMemento): void {
+        this.text = memento.getState();
+    }
+
+    setText(text: string): void {
+        this.text = text;
+    }
+
+    getText(): string {
+        return this.text;
+    }
+}
+
+// Caretaker
+class DocumentHistory {
+    private mementos: EditorMemento[] = [];
+
+    addMemento(memento: EditorMemento): void {
+        this.mementos.push(memento);
+    }
+
+    getMemento(index: number): EditorMemento {
+        return this.mementos[index];
+    }
+}
+
+// Client Code
+const editor = new TextDocument();
+const documentHistory = new DocumentHistory();
+
+editor.setText("Hello World!");
+documentHistory.addMemento(editor.createMemento());
+
+editor.setText("Good Bye World!");
+documentHistory.addMemento(editor.createMemento());
+
+console.log(editor.getText()); // Good Bye World!
+
+editor.restoreMemento(documentHistory.getMemento(0));
+console.log(editor.getText()); // Hello World!
+```
+
+### When To Use Memento Pattern ? ✅
+- **Undo Mechanism:** Ideal when an application needs an undo mechanism to revert changes made to an object's state.
+- **Version Control:** Useful for maintaining different versions or snapshots of an object's state, providing a form of version control.
+- **Transaction Management:** When managing transactions, it can help to save and restore states in case of failures.
+
+### Advantages of Memento Pattern 🪄 :
+- **State Preservation:** Captures an object's state, allowing it to be restored to a previous state.
+- **Encapsulation:** Keeps the internal details of the object's state encapsulated within the memento, preventing direct access.
+- **Undo/Redo Support:** Enables undo and redo functionalities by maintaining a history of states.
+
+### Disadvantages of Memento Pattern 🆘 :
+- **Overhead:** For objects with large or complex states, storing and managing multiple snapshots may introduce overhead.
+- **Memory Usage:** Maintaining a history of states can consume memory, especially if not managed efficiently.
+- **Performance Impact:** Frequent state capturing and restoring may impact performance, depending on the complexity of the object.
+
