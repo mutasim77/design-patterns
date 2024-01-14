@@ -1152,7 +1152,7 @@ The Chain of Responsibility is a behavioral design pattern that lets you pass re
 In simple words:
 > Imagine you have a series of processing tasks, and each task can be handled by a different entity. The Chain of Responsibility pattern allows you to link these entities in a chain. When a task is presented, each entity in the chain has the chance to handle it. If one entity can handle it, the chain stops; otherwise, the task moves along the chain until it finds a handler.
 
-![Chain of Responsibility Pattern](./images/chain-of-responsibility.png)
+![Chain of Responsibility Pattern](./images/chain-of-responsibility-pattern.png)
 
 ### Implementation : 
 ```ts
@@ -1576,3 +1576,56 @@ console.log(editor.getText()); // Hello World!
 - **Memory Usage:** Maintaining a history of states can consume memory, especially if not managed efficiently.
 - **Performance Impact:** Frequent state capturing and restoring may impact performance, depending on the complexity of the object.
 
+## Observer 👀
+The Observer pattern is a behavioral design pattern where an object, known as the subject, maintains a list of dependents, known as observers, that are notified of any changes in the subject's state. This pattern establishes a one-to-many relationship between the subject and its observers, allowing multiple objects to react to changes in another object.
+
+In Simple Words:
+> Defines a subscription mechanism to notify multiple objects about changes in an object's state.
+
+![Observer Pattern](./images/observer-pattern.png)
+
+### Implementation:
+```ts
+```
+
+### When to Use Observer Pattern? ✅
+- **Decoupling Components**: Ideal when you want to decouple the sender (subject) and the receivers (observers), allowing them to operate independently.
+- **Event Handling**: Useful for implementing event handling systems where one object's state changes should trigger actions in other objects.
+- **Dynamic Dependencies**: When you have a scenario where the number and types of observers can change dynamically.
+
+Advantages of Observer Pattern 🪄
+- **Loose Coupling:** Promotes loose coupling between the subject and observers, allowing changes in one to not directly affect the other.
+- **Extensibility:** New observers can be added easily without modifying the subject, making the system more extensible.
+- **Notification Flexibility:** Observers are notified only when relevant changes occur, providing flexibility in handling different types of notifications.
+
+Disadvantages of Observer Pattern 🆘
+- **Unintended Updates:** Observers may receive updates that are not relevant to their current state, leading to unnecessary updates.
+- **Ordering Issues:** The order in which observers are notified may be important, and managing this order can be challenging.
+- **Potential Memory Leaks:** If observers are not properly removed when they are no longer needed, it may lead to memory leaks.
+
+## State 📄
+The State pattern is a behavioral design pattern that allows an object to alter its behavior when its internal state changes. The pattern represents states as separate classes and allows the context (the object whose behavior changes) to switch between these states dynamically.
+
+In Simple Words:
+> Enables an object to alter its behavior when its internal state changes by encapsulating states in separate classes.
+
+![Observer Pattern](./images/observer-pattern.png)
+
+### Implementation: 
+```ts
+```
+
+### When to Use State Pattern? ✅
+- **Object Behavior Depends on State:** Useful when the behavior of an object changes based on its internal state.
+- **Avoiding Long Switch Statements:** When there are multiple conditional statements (if/else or switch) based on the state, and you want to avoid long and complex switch statements.
+- **Dynamic State Transitions:** When state transitions need to be dynamic, allowing for different transitions based on the current state.
+
+### Advantages of State Pattern 🪄
+- **Clean Code Structure:** Separates state-specific behaviors into individual classes, leading to a cleaner and more maintainable code structure.
+- **Encapsulation of States:** Encapsulates states in separate classes, reducing the need for conditional statements and promoting encapsulation.
+- **Easy to Add/Modify States:** Adding or modifying states is easier as each state is represented by its own class.
+
+### Disadvantages of State Pattern 🆘
+- **Increased Number of Classes:** The pattern introduces multiple state classes, potentially increasing the overall number of classes in the system.
+- **Complexity for Simple State Machines:** For simple state machines, using the State pattern may introduce unnecessary complexity.
+- **Global Access to Context:** State classes may need access to the context, which can lead to a global context or dependency injection.
