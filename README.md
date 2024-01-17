@@ -1586,6 +1586,73 @@ In Simple Words:
 
 ### Implementation:
 ```ts
+// Subject interface
+interface Subject {
+    addObserver(observer: Observer): void;
+    removeObserver(observer: Observer): void;
+    notifyObservers(): void;
+}
+
+// Concrete Subject: WeatherStation
+class WeatherStation implements Subject {
+    private temperature: number = 0;
+    private observers: Observer[] = [];
+
+    addObserver(observer: Observer): void {
+        this.observers.push(observer);
+    }
+
+    removeObserver(observer: Observer): void {
+        const index = this.observers.indexOf(observer);
+        if (index !== -1) {
+            this.observers.splice(index, 1);
+        }
+    }
+
+    notifyObservers(): void {
+        for (const observer of this.observers) {
+            observer.update(this.temperature);
+        }
+    }
+
+    setTemperature(temperature: number): void {
+        this.temperature = temperature;
+        this.notifyObservers();
+    }
+}
+
+// Observer interface
+interface Observer {
+    update(temperature: number): void;
+}
+
+// Concrete Observer: TemperatureDisplay
+class TemperatureDisplay implements Observer {
+    private temperature: number = 0;
+
+    update(temperature: number): void {
+        this.temperature = temperature;
+        this.display();
+    }
+
+    display(): void {
+        console.log(`Temperature Display: ${this.temperature}°C`);
+    }
+}
+
+// Client Code
+const weatherStation = new WeatherStation();
+
+const display1 = new TemperatureDisplay();
+const display2 = new TemperatureDisplay();
+
+weatherStation.addObserver(display1);
+weatherStation.addObserver(display2);
+
+weatherStation.setTemperature(25);
+// Output:
+// Temperature Display: 25°C
+// Temperature Display: 25°C
 ```
 
 ### When to Use Observer Pattern? ✅
@@ -1593,26 +1660,84 @@ In Simple Words:
 - **Event Handling**: Useful for implementing event handling systems where one object's state changes should trigger actions in other objects.
 - **Dynamic Dependencies**: When you have a scenario where the number and types of observers can change dynamically.
 
-Advantages of Observer Pattern 🪄
+### Advantages of Observer Pattern 🪄
 - **Loose Coupling:** Promotes loose coupling between the subject and observers, allowing changes in one to not directly affect the other.
 - **Extensibility:** New observers can be added easily without modifying the subject, making the system more extensible.
 - **Notification Flexibility:** Observers are notified only when relevant changes occur, providing flexibility in handling different types of notifications.
 
-Disadvantages of Observer Pattern 🆘
+### Disadvantages of Observer Pattern 🆘
 - **Unintended Updates:** Observers may receive updates that are not relevant to their current state, leading to unnecessary updates.
 - **Ordering Issues:** The order in which observers are notified may be important, and managing this order can be challenging.
 - **Potential Memory Leaks:** If observers are not properly removed when they are no longer needed, it may lead to memory leaks.
 
 ## State 📄
-The State pattern is a behavioral design pattern that allows an object to alter its behavior when its internal state changes. The pattern represents states as separate classes and allows the context (the object whose behavior changes) to switch between these states dynamically.
+The State pattern is a behavioral design pattern that allows an object to change its behavior when its internal state changes. The pattern represents states as separate classes and allows the context (the object whose behavior changes) to switch between these states dynamically.
 
 In Simple Words:
 > Enables an object to alter its behavior when its internal state changes by encapsulating states in separate classes.
 
-![Observer Pattern](./images/observer-pattern.png)
+![Observer Pattern](./images/state-pattern.png)
 
 ### Implementation: 
 ```ts
+// State interface
+interface EditingState {
+    write(text: string): void;
+    save(): void;
+}
+
+// Concrete State 1: DraftState
+class DraftState implements EditingState {
+    write(text: string): void {
+        console.log(`Drafting: ${text}`);
+    }
+
+    save(): void {
+        console.log("Draft saved");
+    }
+}
+
+// Concrete State 2: ReviewState
+class ReviewState implements EditingState {
+    write(text: string): void {
+        console.log(`Reviewing: ${text}`);
+    }
+
+    save(): void {
+        console.log("Cannot save in review mode");
+    }
+}
+
+// Context: DocumentEditor
+class DocumentEditor {
+    private editingState: EditingState;
+
+    constructor(initialState: EditingState) {
+        this.editingState = initialState;
+    }
+
+    setEditingState(state: EditingState): void {
+        this.editingState = state;
+    }
+
+    write(text: string): void {
+        this.editingState.write(text);
+    }
+
+    save(): void {
+        this.editingState.save();
+    }
+}
+
+// Usage
+const documentEditor = new DocumentEditor(new DraftState());
+
+documentEditor.write("Hello World");
+documentEditor.save(); // Draft saved
+
+documentEditor.setEditingState(new ReviewState());
+documentEditor.write("Review comments");
+documentEditor.save(); // Cannot save in review mode
 ```
 
 ### When to Use State Pattern? ✅
@@ -1629,3 +1754,254 @@ In Simple Words:
 - **Increased Number of Classes:** The pattern introduces multiple state classes, potentially increasing the overall number of classes in the system.
 - **Complexity for Simple State Machines:** For simple state machines, using the State pattern may introduce unnecessary complexity.
 - **Global Access to Context:** State classes may need access to the context, which can lead to a global context or dependency injection.
+
+
+## Strategy 🎯
+The Strategy pattern is a behavioral design pattern that defines a family of algorithms, encapsulates each algorithm, and makes them interchangeable. It allows the client to choose an appropriate algorithm at runtime without altering the context (the object that uses the algorithm). This pattern enables a class to vary its behavior dynamically by having multiple algorithms and selecting one of them.
+
+In Simple Words:
+> Defines a set of algorithms, encapsulates each one, and makes them interchangeable. Allows a client to choose an algorithm at runtime.
+
+![Strategy Pattern](./images/strategy-pattern.png)
+
+### Implementation: 
+```ts
+// Strategy interface
+interface SortingStrategy {
+    sort(data: number[]): number[];
+}
+
+// Concrete Strategy 1: BubbleSort
+class BubbleSort implements SortingStrategy {
+    sort(data: number[]): number[] {
+        console.log("Using Bubble Sort");
+        // Implementation of Bubble Sort algorithm
+        return data.sort((a, b) => a - b);
+    }
+}
+
+// Concrete Strategy 2: QuickSort
+class QuickSort implements SortingStrategy {
+    sort(data: number[]): number[] {
+        console.log("Using Quick Sort");
+        // Implementation of Quick Sort algorithm
+        return data.sort((a, b) => a - b);
+    }
+}
+
+// Context: Sorter
+class Sorter {
+    private smallDataSorter: SortingStrategy;
+    private bigDataSorter: SortingStrategy;
+
+    constructor(smallDataSorter: SortingStrategy, bigDataSorter: SortingStrategy) {
+        this.smallDataSorter = smallDataSorter;
+        this.bigDataSorter = bigDataSorter;
+    }
+
+    performSort(data: number[]): number[] {
+        if(data.length > 5){
+            return this.bigDataSorter.sort(data);
+        }
+        return this.smallDataSorter.sort(data);
+    }
+}
+
+// Usage
+const smallDataToSort = [1, 2, 3];
+const bigDataToSort = [5, 2, 8, 1, 7, 9, 11, 99];
+
+const sorter = new Sorter(new BubbleSort(), new QuickSort());
+
+sorter.performSort(smallDataToSort); // Using Bubble Sort
+sorter.performSort(bigDataToSort); // Using Quick Sort
+```
+
+### When to Use Strategy Pattern? ✅
+- **Multiple Algorithms:** When you have multiple algorithms for performing a task, and you want to make them interchangeable.
+- **Dynamic Behavior:** When you need to vary an object's behavior dynamically without altering its class.
+
+### Advantages of Strategy Pattern 🪄
+- **Encapsulation:** Encapsulates algorithms in separate classes, promoting better code organization and maintainability.
+- **Flexibility:** Provides flexibility by allowing clients to choose different algorithms at runtime.
+- **No Modification of Context:** The context class remains unchanged even when switching between algorithms.
+
+### Disadvantages of Strategy Pattern 🆘
+- **Increased Number of Classes:** Introducing multiple strategy classes may increase the overall number of classes in the system.
+- **Clients Must Be Aware:** Clients need to be aware of different strategies and choose the appropriate one, which may add complexity.
+
+## Template Method 🏛️
+The Template Method pattern is a behavioral design pattern that defines the skeleton of an algorithm in the superclass but lets subclasses override specific steps of the algorithm without changing its structure. It allows a class to delegate certain steps of an algorithm to its subclasses, providing a framework for creating a family of related algorithms.
+
+In Simple Words:
+> Defines the structure of an algorithm in a superclass but allows subclasses to customize specific steps of the algorithm without changing its overall structure.
+
+![Template Method Pattern](./images/template-method-pattern.png)
+
+### Implementation in TS: 
+```ts
+// Template Method: DocumentGenerator
+abstract class DocumentGenerator {
+    generateDocument(): string {
+        const header = this.createHeader();
+        const content = this.createContent();
+        const footer = this.createFooter();
+
+        return `${header} - ${content} - ${footer}`;
+    }
+
+    abstract createHeader(): string;
+    abstract createContent(): string;
+    abstract createFooter(): string;
+}
+
+// Concrete Template Method 1: PDFDocumentGenerator
+class PDFDocumentGenerator extends DocumentGenerator {
+    createHeader(): string {
+        return "PDF Header";
+    }
+
+    createContent(): string {
+        return "PDF Content";
+    }
+
+    createFooter(): string {
+        return "PDF Footer";
+    }
+}
+
+// Concrete Template Method 2: WordDocumentGenerator
+class WordDocumentGenerator extends DocumentGenerator {
+    createHeader(): string {
+        return "Word Header";
+    }
+
+    createContent(): string {
+        return "Word Content";
+    }
+
+    createFooter(): string {
+        return "Word Footer";
+    }
+}
+
+// Usage
+const pdfGenerator = new PDFDocumentGenerator();
+console.log(pdfGenerator.generateDocument()); // PDF Header - PDF Content - PDF Footer
+
+const wordGenerator = new WordDocumentGenerator();
+console.log(wordGenerator.generateDocument()); // Word Header - Word Content - Word Footer
+```
+
+### When to Use Template Method Pattern? ✅
+- **Common Algorithm Structure:** When multiple classes share a common algorithm structure, but some steps need to be implemented differently.
+- **Avoiding Code Duplication:** When you want to avoid code duplication by encapsulating the common parts of algorithms in a base class.
+- **Providing Hooks:** When you want to provide hooks (methods) that subclasses can override to customize behavior.
+
+### Advantages of Template Method Pattern 🪄
+- **Code Reusability:** Encourages code reusability by defining a common algorithm structure in a base class.
+- **Flexibility:** Allows subclasses to customize certain steps of the algorithm without altering its overall structure.
+- **Encapsulation:** Encapsulates the common algorithm in one place, making it easier to maintain and understand.
+
+### Disadvantages of Template Method Pattern 🆘
+- **Rigidity:** May lead to a rigid structure, and changes in the overall algorithm structure can impact all subclasses.
+- **Limited Runtime Changes:** The algorithm structure is determined at compile-time, limiting the ability to make runtime changes easily.
+
+## Visitor 🚶‍♂️
+The Visitor pattern is a behavioral design pattern that allows you to define a new operation without changing the classes of the elements on which it operates. It separates the algorithms from the objects on which they operate by encapsulating these algorithms in visitor objects. This pattern enables you to add new behaviors to a set of classes without modifying their structure.
+
+In Simple Words:
+> Defines a way to perform operations on elements of a structure without changing the classes of those elements.
+
+![Visitor Pattern](./images/visitor-pattern.png)
+
+### Implementation in TS: 
+```ts
+// Element interface
+interface Shape {
+    accept(visitor: ShapeVisitor): void;
+}
+
+// Concrete Element 1: Circle
+class Circle implements Shape {
+    radius: number;
+
+    constructor(radius: number) {
+        this.radius = radius;
+    }
+
+    accept(visitor: ShapeVisitor): void {
+        visitor.visitCircle(this);
+    }
+}
+
+// Concrete Element 2: Square
+class Square implements Shape {
+    side: number;
+
+    constructor(side: number) {
+        this.side = side;
+    }
+
+    accept(visitor: ShapeVisitor): void {
+        visitor.visitSquare(this);
+    }
+}
+
+// Visitor interface
+interface ShapeVisitor {
+    visitCircle(circle: Circle): void;
+    visitSquare(square: Square): void;
+}
+
+// Concrete Visitor 1: DrawingVisitor
+class DrawingVisitor implements ShapeVisitor {
+    visitCircle(circle: Circle): void {
+        console.log(`Drawing Circle with radius ${circle.radius}`);
+    }
+
+    visitSquare(square: Square): void {
+        console.log(`Drawing Square with side ${square.side}`);
+    }
+}
+
+// Concrete Visitor 2: AreaCalculatorVisitor
+class AreaCalculatorVisitor implements ShapeVisitor {
+    visitCircle(circle: Circle): void {
+        const area = Math.PI * circle.radius * circle.radius;
+        console.log(`Area of Circle: ${area.toFixed(2)}`);
+    }
+
+    visitSquare(square: Square): void {
+        const area = square.side * square.side;
+        console.log(`Area of Square: ${area}`);
+    }
+}
+
+// Usage
+const circle = new Circle(5);
+const square = new Square(4);
+
+const drawingVisitor = new DrawingVisitor();
+const areaCalculatorVisitor = new AreaCalculatorVisitor();
+
+circle.accept(drawingVisitor); // Drawing Circle with radius 5
+circle.accept(areaCalculatorVisitor); // Area of Circle: 78.54
+
+square.accept(drawingVisitor); // Drawing Square with side 4
+square.accept(areaCalculatorVisitor); // Area of Square: 16
+```
+
+### When to Use Visitor Pattern? ✅
+- **Adding Operations to Classes:** When you want to add new operations to classes without modifying their code.
+- **Decoupling Operations:** When you want to decouple the algorithm from the objects on which it operates.
+- **Complex Object Structures:** When dealing with complex object structures and you want to keep related behaviors together.
+
+### Advantages of Visitor Pattern 🪄
+- **Open-Closed Principle:** Supports the open-closed principle by allowing the addition of new operations without modifying existing classes.
+- **Modular and Extensible:** Makes it easy to add new functionalities by introducing new visitor classes.
+- **Separation of Concerns:** Separates concerns by moving the behavior into visitor classes, keeping the object structure clean.
+
+### Disadvantages of Visitor Pattern 🆘
+- **Increased Number of Classes:** Introducing visitor classes may increase the overall number of classes in the system.
+- **Access to Private Members:** Visitors might need access to private members of elements, leading to potential encapsulation violations.
