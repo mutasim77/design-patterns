@@ -63,7 +63,7 @@ Design patterns are reusable solutions to common problems that occur in software
    - [Flyweight 🪰](#flyweight-)
    - [Proxy 🔗](#proxy-)
 5. [Behavioral Design Patterns 🧠](#behavioral-design-patterns-)
-   - [Chain of Responsibility ⛓️](#chain-of-reponsibility-)
+   - [Chain of Responsibility ⛓️](#chain-of-responsibility-)
    - [Command 👮‍♂️](#command-)
    - [Iterator 🔍](#iterator-)
    - [Mediator 🤝](#mediator-)
