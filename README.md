@@ -1146,7 +1146,7 @@ Behavioral design patterns help organize how different parts of a software syste
 <br/>
 <hr/>
 
-## Chain of Responsibility ⛓️
+## Chain of Responsibility ⛓
 The Chain of Responsibility is a behavioral design pattern that lets you pass requests along a chain of handlers. Upon receiving a request, each handler decides either to process the request or to pass it to the next handler in the chain.
 
 In simple words:
@@ -1246,7 +1246,7 @@ manager.processRequest(10000); // Vice President approves the purchase of $10000
 - **Debugging Challenges:** Finding problems can be tricky.
 - **Responsibility Overload:** Avoid giving one person too many jobs.
 
-## Command 👮‍♂️
+## Command 👮‍♂
 The Command design pattern transforms requests into standalone objects, making it easy to pass requests as method arguments, delay or queue their execution, and support undoable operations.
 
 In simple words:
@@ -1347,7 +1347,7 @@ remote.pressButton(); // Light is OFF
 - **Debugging Challenges:** Dynamic execution and deferred commands may make debugging less straightforward.
 - **Lack of Direct Feedback:** Encapsulation may complicate obtaining direct results from command execution.
 
-## Iterator 🔍 
+## Iterator 🔍
 The Iterator pattern is a design pattern that allows sequential access to elements in a collection, without exposing its underlying representation. It provides a way to access the elements of an aggregate object sequentially without exposing the underlying details.
 
 In simple words:
@@ -1406,7 +1406,7 @@ while (stringIterator.hasNext()) {
 - **Performance Considerations:** Depending on implementation, performance may be impacted, especially for computationally expensive hasNext() or next() methods.
 - **Memory Consumption:** Multiple iterator instances can increase memory consumption, particularly for large collections.
 
-## Mediator 🤝 
+## Mediator 🤝
 The Mediator pattern is a design pattern that defines an object to centralize communication between different components, promoting loose coupling. It allows components to interact without directly referencing each other, reducing dependencies.
 
 In simple words:
@@ -1830,7 +1830,7 @@ sorter.performSort(bigDataToSort); // Using Quick Sort
 - **Increased Number of Classes:** Introducing multiple strategy classes may increase the overall number of classes in the system.
 - **Clients Must Be Aware:** Clients need to be aware of different strategies and choose the appropriate one, which may add complexity.
 
-## Template Method 🏛️
+## Template Method 🏛
 The Template Method pattern is a behavioral design pattern that defines the skeleton of an algorithm in the superclass but lets subclasses override specific steps of the algorithm without changing its structure. It allows a class to delegate certain steps of an algorithm to its subclasses, providing a framework for creating a family of related algorithms.
 
 In Simple Words:
@@ -1907,7 +1907,7 @@ console.log(wordGenerator.generateDocument()); // Word Header - Word Content - W
 - **Rigidity:** May lead to a rigid structure, and changes in the overall algorithm structure can impact all subclasses.
 - **Limited Runtime Changes:** The algorithm structure is determined at compile-time, limiting the ability to make runtime changes easily.
 
-## Visitor 🚶‍♂️
+## Visitor 🚶‍♂
 The Visitor pattern is a behavioral design pattern that allows you to define a new operation without changing the classes of the elements on which it operates. It separates the algorithms from the objects on which they operate by encapsulating these algorithms in visitor objects. This pattern enables you to add new behaviors to a set of classes without modifying their structure.
 
 In Simple Words:
