@@ -2004,3 +2004,5 @@ square.accept(areaCalculatorVisitor); // Area of Square: 16
 ### Disadvantages of Visitor Pattern 🆘
 - **Increased Number of Classes:** Introducing visitor classes may increase the overall number of classes in the system.
 - **Access to Private Members:** Visitors might need access to private members of elements, leading to potential encapsulation violations.
+
+# SOLID Principles ⚖
