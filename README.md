@@ -2009,3 +2009,21 @@ square.accept(areaCalculatorVisitor); // Area of Square: 16
 <hr>
 
 # SOLID Principles ⚖
+SOLID is an acronym that represents a set of five design principles for writing maintainable and scalable software. These principles were introduced by [Robert C. Martin](https://en.wikipedia.org/wiki/Robert_C._Martin) and are considered foundational concepts in object-oriented programming and design. The SOLID principles aim to create robust, flexible, and easily maintainable software by promoting clean and efficient code organization.
+
+## Why Do We Use SOLID? 🎁
+1. **Maintainability:** SOLID principles enhance code maintainability by providing a clear structure, reducing code smells, and making it easier to add or modify features.
+2. **Scalability:** As the codebase grows, adhering to SOLID principles helps manage complexity and ensures that the system remains scalable and adaptable to changes.
+3. **Collaboration:** A codebase following SOLID principles is more accessible and understandable, facilitating collaboration among developers and making it easier for new team members to grasp the code.
+
+## Things to Remember When Using SOLID ⚠
+1. **Gradual Adoption:** Implement SOLID principles gradually to existing codebases. Refactoring all code at once might not be practical.
+2. **Real-world Applicability:** Apply the principles judiciously. There are scenarios where breaking a principle is a better choice for specific reasons.
+3. **Balance and Context:** Achieving a balance between SOLID principles may require trade-offs. Consider the specific context of your application and team.
+
+## What are SOLID? 👀
+- [S - Single Responsibility Principle (SRP) 🕺](#single-responsibility-principle-)
+- [O - Open/Closed Principle (OCP) 🚪🔒](#open-closed-principle-)
+- [L - Liskov Substitution Principle (LSP) 🧩](#liskov-substitutaion-principle-)
+- [I - Interface Segregation Principle (ISP) 🧍‍♂️🤝🧍‍♀️](#interface-segregation-principle-)
+- [D - Dependency Inversion Principle (DIP) 🔄](#dependency-inversion-principle-)
