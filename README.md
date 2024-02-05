@@ -10,6 +10,40 @@
 Explore essential concepts in software engineering, such as Design Patterns and SOLID principles, for creating scalable, maintainable, and efficient code. This repo simplifies these ideas, ensuring accessibility for developers of all levels. Let's delve into this world together and unravel the secrets of effective software engineering!
 </p>
 
+# Getting Started 📜
+To get started, follow the navigation below to explore different sections of this repository:
+- [Design Patterns](#design-patterns-): Reusable solutions to common problems in software design.
+- [SOLID Principles](#solid-principles-): Guiding principles for creating well-structured and maintainable code.
+
+Feel free to dive into the content that interests you the most!
+
+# Design Patterns 🔮
+1. [Creational Design Patterns 🏗](#creational-design-patterns-)
+   - [Singleton 💍](#singleton-)
+   - [Prototype 🧬](#prototype-)
+   - [Builder 👷](#builder-)
+   - [Factory Method 🏭](#factory-method-)
+   - [Abstract Factory 🔨](#abstract-factory-)
+3. [Structural Design Patterns 🛠️](#structural-design-patterns-)
+   - [Adapter 🔌](#adapter-)
+   - [Bridge 🌉](#bridge-)
+   - [Composite 🌴](#composite-)
+   - [Decorator 🎨](#decorator-)
+   - [Facade 🏰](#facade-)
+   - [Flyweight 🪰](#flyweight-)
+   - [Proxy 🔗](#proxy-)
+5. [Behavioral Design Patterns 🧠](#behavioral-design-patterns-)
+   - [Chain of Responsibility ⛓️](#chain-of-responsibility-)
+   - [Command 👮‍♂️](#command-)
+   - [Iterator 🔍](#iterator-)
+   - [Mediator 🤝](#mediator-)
+   - [Memento 💾](#memento-)
+   - [Observer 👀](#observer-)
+   - [State 📄](#state-)
+   - [Strategy 🎯](#strategy-)
+   - [Template Method 🏛️](#template-method-)
+   - [Visitor 🚶‍♂️](#visitor-)
+  
 ## What are Design Patterns? 👀
 Design patterns are reusable solutions to common problems in software design, offering a structured and proven approach to addressing recurring challenges. They serve as templates or blueprints for solving specific types of problems, making it easier for developers to create efficient and maintainable code. Design patterns provide a shared vocabulary and understanding among developers, promoting reusability, modularity, and improved communication. They encapsulate the best practices of experienced developers, allowing for easier problem-solving and enhanced maintainability. However, it's crucial to apply design patterns judiciously, considering the specific context and potential trade-offs associated with their use.
 
@@ -38,41 +72,6 @@ It's super important to use design patterns wisely. Imagine you have a cool tool
 4. **Be Ready to Change:** As projects grow, what worked before might not be the best choice anymore. We need to be flexible and adjust.
 
 > Using design patterns is like having a toolbox full of helpful tools. Just remember, not every tool is right for every job. We should pick the ones that fit the situation best. If we do that, our programs will be strong and reliable!
-
-## Getting Started 👻
-To get started, follow the navigation below to explore different sections of this repository:
-- [Design Patterns](#design-patterns-): Reusable solutions to common problems in software design.
-- [SOLID Principles](#solid-principles-): Guiding principles for creating well-structured and maintainable code.
-
-Feel free to dive into the content that interests you the most!
-
-# Design Patterns 🔮
-Design patterns are reusable solutions to common problems that occur in software design. They can be classified into three main categories: Creational, Structural, and Behavioral design patterns. Each of these categories serves a distinct purpose and helps in solving different types of problems in software design.
-1. [Creational Design Patterns 🏗](#creational-design-patterns-)
-   - [Singleton 💍](#singleton-)
-   - [Prototype 🧬](#prototype-)
-   - [Builder 👷](#builder-)
-   - [Factory Method 🏭](#factory-method-)
-   - [Abstract Factory 🔨](#abstract-factory-)
-3. [Structural Design Patterns 🛠️](#structural-design-patterns-)
-   - [Adapter 🔌](#adapter-)
-   - [Bridge 🌉](#bridge-)
-   - [Composite 🌴](#composite-)
-   - [Decorator 🎨](#decorator-)
-   - [Facade 🏰](#facade-)
-   - [Flyweight 🪰](#flyweight-)
-   - [Proxy 🔗](#proxy-)
-5. [Behavioral Design Patterns 🧠](#behavioral-design-patterns-)
-   - [Chain of Responsibility ⛓️](#chain-of-responsibility-)
-   - [Command 👮‍♂️](#command-)
-   - [Iterator 🔍](#iterator-)
-   - [Mediator 🤝](#mediator-)
-   - [Memento 💾](#memento-)
-   - [Observer 👀](#observer-)
-   - [State 📄](#state-)
-   - [Strategy 🎯](#strategy-)
-   - [Template Method 🏛️](#template-method-)
-   - [Visitor 🚶‍♂️](#visitor-)
 
 # Creational Design Patterns 🏗
 Creational design patterns 🎨 revolve around the intricacies of object creation. They introduce a level of abstraction to the instantiation process, ensuring the system remains agnostic to the specifics of how its objects come into existence, are composed, and represented. These design patterns offer a mechanism for object creation that conceals the intricacies of the creation logic, steering away from direct object instantiation using the new operator. By doing so, they grant greater flexibility in determining the objects necessary for a given use case. Notable examples of creational design patterns encompass Singleton, Factory Method, Abstract Factory, Builder, and Prototype. 🚀
@@ -2025,8 +2024,8 @@ SOLID is an acronym that represents a set of five design principles for writing 
 
 ## What are SOLID? 👀
 - [S - Single Responsibility Principle (SRP) 🕺](#single-responsibility-principle-)
-- [O - Open/Closed Principle (OCP) 🚪🔒](#open-closed-principle-)
-- [L - Liskov Substitution Principle (LSP) 🧩](#liskov-substitutaion-principle-)
+- [O - Open/Closed Principle (OCP) 🚪🔒](#openclosed-principle-)
+- [L - Liskov Substitution Principle (LSP) 🧩](#liskov-substitution-principle-)
 - [I - Interface Segregation Principle (ISP) 🧍‍♂️🤝🧍‍♀️](#interface-segregation-principle-)
 - [D - Dependency Inversion Principle (DIP) 🔄](#dependency-inversion-principle-)
 
