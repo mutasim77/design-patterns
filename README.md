@@ -2027,3 +2027,150 @@ SOLID is an acronym that represents a set of five design principles for writing 
 - [L - Liskov Substitution Principle (LSP) 🧩](#liskov-substitutaion-principle-)
 - [I - Interface Segregation Principle (ISP) 🧍‍♂️🤝🧍‍♀️](#interface-segregation-principle-)
 - [D - Dependency Inversion Principle (DIP) 🔄](#dependency-inversion-principle-)
+
+
+## Single Responsibility Principle 🕺
+The Single Responsibility Principle is one of the SOLID principles of object-oriented design. It states that a class should have only one reason to change, meaning it should have only one responsibility. Each class should focus on doing one thing and doing it well. This principle aims to enhance maintainability, readability, and flexibility in software development.
+
+> "A class should have only one reason to change." -- Robert C. Martin
+
+### Code in TS:
+```ts
+class UserManager {
+    getUsers(): User[] { /* ... */ }
+    saveUser(user: User): void { /* ... */ }
+    deleteUser(userId: string): void { /* ... */ }
+}
+
+class UserRenderer {
+    renderUser(user: User): void { /* ... */ }
+}
+
+class User {
+    constructor(public id: string, public name: string, public email: string) {}
+}
+
+const userManager = new UserManager();
+const userRenderer = new UserRenderer();
+
+const users = userManager.getUsers();
+users.forEach(userRenderer.renderUser);
+```
+
+> `UserManager` class is responsible for managing user data, providing methods to get, save, and delete user information. `UserRenderer` class is responsible for rendering user data in the UI. The `User` class represents the data model for a user. This separation allows each class to focus on a single responsibility: one for managing data, and the other for rendering and UI interaction.
+
+### Advantages of the SRP 🪄:
+- **Readability:** Clear responsibilities in each class improve code readability.
+- **Maintainability:** Changes in one area don't affect unrelated parts, enhancing maintainability.
+- **Testing:** Single responsibilities make classes easier to test.
+- **Reusability:** Modular classes with single responsibilities are more reusable and adaptable.
+
+## Open/Closed Principle 🚪🔒
+The Open/Closed Principle is a SOLID design principle that suggests a class should be open for extension but closed for modification. This means that a class's behavior can be extended without altering its source code, promoting the addition of new features or functionalities without changing existing ones.
+
+> "The Open-Closed Principle states that "software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification." -- Robert C. Martin
+
+### Code in TS:
+```ts
+// Interface defining the messaging behavior
+interface MessageSender {
+    sendMessage(message: string): void;
+}
+
+// Concrete class 1: EmailSender
+class EmailSender implements MessageSender {
+    sendMessage(message: string): void {
+        console.log(`Sending email: ${message}`);
+    }
+}
+
+// Concrete class 2: SMSSender
+class SMSSender implements MessageSender {
+    sendMessage(message: string): void {
+        console.log(`Sending SMS: ${message}`);
+    }
+}
+
+// Class handling message sending without modifying existing senders
+class MessageProcessor {
+    constructor(private messageSender: MessageSender) {}
+
+    processMessage(content: string): void {
+        // Business logic for processing a message
+        console.log(`Message processed: ${content}`);
+        // Using the provided message sender
+        this.messageSender.sendMessage(content);
+    }
+}
+
+// Usage
+const emailSender = new EmailSender();
+const smsSender = new SMSSender();
+
+const emailProcessor = new MessageProcessor(emailSender);
+const smsProcessor = new MessageProcessor(smsSender);
+
+emailProcessor.processMessage("Hello via Email");
+smsProcessor.processMessage("Hi via SMS");
+```
+> The code follows the Open/Closed Principle. It handles messaging with classes like `EmailSender` and `SMSSender`. The `MessageProcessor` processes messages without modifying existing senders, allowing easy addition of new senders.
+
+
+### Advantages of the OCP 🪄:
+- **Flexible Extension:** Easily add new features or functionalities without modifying existing code.
+- **Reduced Bug Risk:** Minimize the risk of introducing bugs in already functional code.
+- **Enhanced Code Stability:** Existing code remains stable and reliable as new components are added.
+
+
+## Liskov Substitution Principle 🧩
+The Liskov Substitution Principle is a SOLID design principle that states objects of a superclass should be replaceable with objects of its subclass without affecting the correctness of the program. In simpler terms, a derived class should be able to substitute its base class without causing errors.
+
+> A `subtype` should behave like a `supertype` as far as you can tell by using the `supertype` methods.
+
+### Code in TS:
+```ts
+abstract class Bird {
+  abstract move(): void;
+}
+
+class Sparrow extends Bird {
+  public move(): void {
+    console.log("Chirp chirp")
+  }
+}
+
+class Penguin extends Bird {
+  public move(): void {
+    console.log("Swimming")
+  }
+}
+
+// Function utilizing LSP
+function performMove(bird: Bird): void {
+    bird.move();
+}
+
+const sparrow = new Sparrow();
+const penguin = new Penguin();
+
+performMove(sparrow); // Chirp chirp
+performMove(penguin); // Swimming
+```
+
+### Advantages of the LSP 🪄:
+- **Consistent Behavior:** Substituting derived classes ensures consistent behavior, promoting predictability.
+- **Maintenance Ease:** Adding new subclasses is possible without modifying existing code, enhancing maintainability.
+- **Interchangeability:** Base and derived class objects can be used interchangeably, providing flexibility.
+- **Extensibility Support:** Facilitates the creation of new subclasses without disrupting existing code, supporting extensibility.
+
+
+## Interface Segregation Principle 🧍‍♂🤝🧍‍♀
+
+> "No client should be forced to depend on interfaces they do not use." - Robert C. Martin
+
+### Code in TS:
+```ts
+
+```
+
+### Advantages of the ISP 🪄:
